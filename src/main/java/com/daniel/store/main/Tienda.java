@@ -37,32 +37,32 @@ public class Tienda {
              System.out.println(p);
          }
            BillDAO billDao = new BillDAO();
-         List<Bill> bills = billDao.getAllProductsFromDB();
+         List<Bill> bills = billDao.getAllBillFromDB();
          for(Bill p : bills){
              System.out.println(p);
          }
           ClientDAO clientDao = new ClientDAO();
-         List<Client> clients = clientDao.getAllProductsFromDB();
+         List<Client> clients = clientDao.getAllClientFromDB();
          for(Client p : clients){
              System.out.println(p);
          }
           DocumentDAO documentDao = new DocumentDAO();
-         List<Document> documents = documentDao.getAllProductsFromDB();
+         List<Document> documents = documentDao.getAllDocumentFromDB();
          for(Document p : documents){
              System.out.println(p);
          }
           SaleDAO saleDao = new SaleDAO();
-         List<Sale> sales = saleDao.getAllProductsFromDB();
+         List<Sale> sales = saleDao.getAllSaleFromDB();
          for(Sale p : sales ){
              System.out.println(p);
          }
           SaleProductDAO saleProductDao = new SaleProductDAO();
-         List<SaleProduct> saleProducts = saleProductDao.getAllProductsFromDB();
+         List<SaleProduct> saleProducts = saleProductDao.getAllSaleProductFromDB();
          for(SaleProduct p : saleProducts){
              System.out.println(p);
          }
          SupplierDAO supplierDao = new SupplierDAO();
-         List<Supplier> suppliers = supplierDao.getAllProductsFromDB();
+         List<Supplier> suppliers = supplierDao.getAllSupplierFromDB();
          for(Supplier p : suppliers){
              System.out.println(p);
          }

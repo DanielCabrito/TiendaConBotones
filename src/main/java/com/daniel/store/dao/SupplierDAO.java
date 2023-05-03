@@ -23,10 +23,10 @@ public class SupplierDAO {
     private String user="root";
     private String pwd="";
     
-    public List<Supplier> getAllProductsFromDB() { 
-        List<Supplier> productList = new ArrayList<>();
+    public List<Supplier> getAllSupplierFromDB() { 
+        List<Supplier> supplierList = new ArrayList<>();
         //Conectarse a BD
-        String sql = "SELECT * FROM tiendacabrito.PRODUCTOS";
+        String sql = "SELECT * FROM tiendacabrito.PROVEEDORES";
         try (Connection con = DriverManager.getConnection(
                 myConnectionURL,
                 user, pwd); PreparedStatement ps = con.prepareStatement(sql)) {
@@ -38,13 +38,13 @@ public class SupplierDAO {
                     p.setPhoneNumber(rs.getInt("TELEFONO"));
                     p.setAdress(rs.getString("DIRECCION"));
                     p.setNote(rs.getString("NOTAS"));
-                    productList.add(p);
+                    supplierList.add(p);
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         
-        return productList;
+        return supplierList;
     }
 }

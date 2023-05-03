@@ -23,10 +23,10 @@ public class SaleProductDAO {
     private String user="root";
     private String pwd="";
     
-    public List<SaleProduct> getAllProductsFromDB() { 
-        List<SaleProduct> productList = new ArrayList<>();
+    public List<SaleProduct> getAllSaleProductFromDB() { 
+        List<SaleProduct> saleProductList = new ArrayList<>();
         //Conectarse a BD
-        String sql = "SELECT * FROM tiendacabrito.PRODUCTOS";
+        String sql = "SELECT * FROM tiendacabrito.VENTA_PRODUCTO";
         try (Connection con = DriverManager.getConnection(
                 myConnectionURL,
                 user, pwd); PreparedStatement ps = con.prepareStatement(sql)) {
@@ -38,13 +38,13 @@ public class SaleProductDAO {
                     p.setAmount(rs.getInt("CANTIDAD"));
                     p.setUnitPrice(rs.getFloat("PRECIO_UNIDAD"));
                     p.setSaleId(rs.getInt("VENTA_ID"));
-                    productList.add(p);
+                    saleProductList.add(p);
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         
-        return productList;
+        return saleProductList;
     }
 }

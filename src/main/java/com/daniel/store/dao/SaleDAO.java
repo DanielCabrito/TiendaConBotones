@@ -23,10 +23,10 @@ public class SaleDAO {
     private String user="root";
     private String pwd="";
     
-    public List<Sale> getAllProductsFromDB() { 
-        List<Sale> productList = new ArrayList<>();
+    public List<Sale> getAllSaleFromDB() { 
+        List<Sale> saleList = new ArrayList<>();
         //Conectarse a BD
-        String sql = "SELECT * FROM tiendacabrito.PRODUCTOS";
+        String sql = "SELECT * FROM tiendacabrito.VENTAS";
         try (Connection con = DriverManager.getConnection(
                 myConnectionURL,
                 user, pwd); PreparedStatement ps = con.prepareStatement(sql)) {
@@ -37,14 +37,14 @@ public class SaleDAO {
                     p.setDate(rs.getInt("FECHA"));
                     p.setSubtotal(rs.getFloat("SUBTOTAL"));
                     p.setIva(rs.getFloat("IVA"));
-                    p.setTotal(rs.getFloat("PROVEEDOR_ID"));
-                    productList.add(p);
+                    p.setTotal(rs.getFloat("TOTAL"));
+                    saleList.add(p);
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         
-        return productList;
+        return saleList;
     }
 }

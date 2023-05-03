@@ -22,10 +22,10 @@ public class ClientDAO {
     private String user="root";
     private String pwd="";
     
-    public List<Client> getAllProductsFromDB() { 
-        List<Client> productList = new ArrayList<>();
+    public List<Client> getAllClientFromDB() { 
+        List<Client> clientList = new ArrayList<>();
         //Conectarse a BD
-        String sql = "SELECT * FROM tiendacabrito.PRODUCTOS";
+        String sql = "SELECT * FROM tiendacabrito.CLIENTES";
         try (Connection con = DriverManager.getConnection(
                 myConnectionURL,
                 user, pwd); PreparedStatement ps = con.prepareStatement(sql)) {
@@ -38,13 +38,13 @@ public class ClientDAO {
                     p.setRfc(rs.getString("RFC"));
                     p.setPhoneNumber(rs.getInt("TELEFONO"));
                     p.setEmail(rs.getString("CORREO"));
-                    productList.add(p);
+                    clientList.add(p);
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         
-        return productList;
+        return clientList;
     }
 }

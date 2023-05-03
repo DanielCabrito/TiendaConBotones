@@ -22,10 +22,10 @@ public class BillDAO {
     private String user="root";
     private String pwd="";
     
-    public List<Bill> getAllProductsFromDB() { 
-        List<Bill> productList = new ArrayList<>();
+    public List<Bill> getAllBillFromDB() { 
+        List<Bill> billList = new ArrayList<>();
         //Conectarse a BD
-        String sql = "SELECT * FROM tiendacabrito.PRODUCTOS";
+        String sql = "SELECT * FROM tiendacabrito.FACTURA";
         try (Connection con = DriverManager.getConnection(
                 myConnectionURL,
                 user, pwd); PreparedStatement ps = con.prepareStatement(sql)) {
@@ -36,13 +36,13 @@ public class BillDAO {
                     p.setClient(rs.getInt("CLIENTE_ID"));
                     p.setDate(rs.getInt("FECHA"));
                     p.setSaleId(rs.getInt("VENTA_ID"));
-                    productList.add(p);
+                    billList.add(p);
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         
-        return productList;
+        return billList;
     }
 }
