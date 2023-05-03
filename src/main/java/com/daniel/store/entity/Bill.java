@@ -4,6 +4,9 @@
  */
 package com.daniel.store.entity;
 
+import java.util.Date;
+
+
 /**
  *
  * @author carri
@@ -11,13 +14,13 @@ package com.daniel.store.entity;
 public class Bill {
     private int billsId;
     private int client;
-    private int date;
+    private Date date;
     private int saleId;
 
     public Bill() {
     }
 
-    public Bill(int billsId, int client, int date, int saleId) {
+    public Bill(int billsId, int client, Date date, int saleId) {
         this.billsId = billsId;
         this.client = client;
         this.date = date;
@@ -40,11 +43,11 @@ public class Bill {
         this.client = client;
     }
 
-    public int getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(int date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 
@@ -60,6 +63,10 @@ public class Bill {
     public String toString() {
         return "Bill{" + "billsId=" + billsId + ", client=" + client + ", date=" + date + ", saleId=" + saleId + '}';
     }
+
+    
+
+    
 
     
 }

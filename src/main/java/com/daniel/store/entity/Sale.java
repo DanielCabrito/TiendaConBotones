@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.daniel.store.entity;
+import java.sql.Date;
 
 /**
  *
@@ -10,7 +11,7 @@ package com.daniel.store.entity;
  */
 public class Sale {
     private int saleId;
-    private int date;
+    private Date date;
     private float subtotal;
     private float iva;
     private float total;
@@ -18,7 +19,7 @@ public class Sale {
     public Sale() {
     }
 
-    public Sale(int saleId, int date, float subtotal, float iva, float total) {
+    public Sale(int saleId, Date date, float subtotal, float iva, float total) {
         this.saleId = saleId;
         this.date = date;
         this.subtotal = subtotal;
@@ -34,11 +35,11 @@ public class Sale {
         this.saleId = saleId;
     }
 
-    public int getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(int date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 
@@ -70,5 +71,5 @@ public class Sale {
     public String toString() {
         return "Sale{" + "saleId=" + saleId + ", date=" + date + ", subtotal=" + subtotal + ", iva=" + iva + ", total=" + total + '}';
     }
-    
+
 }

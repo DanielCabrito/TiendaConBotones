@@ -3,6 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.daniel.store.entity;
+import java.sql.Date;
+
 
 /**
  *
@@ -11,15 +13,15 @@ package com.daniel.store.entity;
 public class Document {
     private int documentsId;
     private String site;
-    private int date;
-    private int datePay;
+    private Date date;
+    private Date datePay;
     private float amountPay;
     private int supplierId;
 
     public Document() {
     }
 
-    public Document(int documentsId, String site, int date, int datePay, float amountPay, int supplierId) {
+    public Document(int documentsId, String site, Date date, Date datePay, float amountPay, int supplierId) {
         this.documentsId = documentsId;
         this.site = site;
         this.date = date;
@@ -44,19 +46,19 @@ public class Document {
         this.site = site;
     }
 
-    public int getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(int date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 
-    public int getDatePay() {
+    public Date getDatePay() {
         return datePay;
     }
 
-    public void setDatePay(int datePay) {
+    public void setDatePay(Date datePay) {
         this.datePay = datePay;
     }
 
@@ -78,8 +80,12 @@ public class Document {
 
     @Override
     public String toString() {
-        return "documents{" + "documentsId=" + documentsId + ", site=" + site + ", date=" + date + ", datePay=" + datePay + ", amountPay=" + amountPay + ", supplierId=" + supplierId + '}';
+        return "Document{" + "documentsId=" + documentsId + ", site=" + site + ", date=" + date + ", datePay=" + datePay + ", amountPay=" + amountPay + ", supplierId=" + supplierId + '}';
     }
+
+   
+
+   
     
     
 }

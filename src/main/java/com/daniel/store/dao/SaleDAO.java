@@ -34,7 +34,7 @@ public class SaleDAO {
                 while (rs.next()) {
                     Sale p = new Sale();
                     p.setSaleId(rs.getInt("VENTA_ID"));
-                    p.setDate(rs.getInt("FECHA"));
+                    p.setDate(rs.getDate("FECHA"));
                     p.setSubtotal(rs.getFloat("SUBTOTAL"));
                     p.setIva(rs.getFloat("IVA"));
                     p.setTotal(rs.getFloat("TOTAL"));

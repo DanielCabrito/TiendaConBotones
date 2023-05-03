@@ -34,7 +34,7 @@ public class BillDAO {
                     Bill p = new Bill();
                     p.setBillsId(rs.getInt("FACTURA_ID"));
                     p.setClient(rs.getInt("CLIENTE_ID"));
-                    p.setDate(rs.getInt("FECHA"));
+                    p.setDate(rs.getDate("FECHA"));
                     p.setSaleId(rs.getInt("VENTA_ID"));
                     billList.add(p);
                 }
