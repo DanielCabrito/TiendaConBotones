@@ -10,6 +10,9 @@ import java.sql.Date;
  * @author carri
  */
 public class Sale {
+     java.util.Date utilDate = new java.util.Date(2023,05,03);
+    java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+    
     private int saleId;
     private Date date;
     private float subtotal;
@@ -71,5 +74,7 @@ public class Sale {
     public String toString() {
         return "Sale{" + "saleId=" + saleId + ", date=" + date + ", subtotal=" + subtotal + ", iva=" + iva + ", total=" + total + '}';
     }
+
+
 
 }

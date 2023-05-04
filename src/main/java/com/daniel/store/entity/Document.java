@@ -11,6 +11,11 @@ import java.sql.Date;
  * @author carri
  */
 public class Document {
+    java.util.Date utilDate = new java.util.Date(2023,05,03);
+    java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+
+
+
     private int documentsId;
     private String site;
     private Date date;
@@ -18,10 +23,15 @@ public class Document {
     private float amountPay;
     private int supplierId;
 
+
+
+
     public Document() {
+       
     }
 
     public Document(int documentsId, String site, Date date, Date datePay, float amountPay, int supplierId) {
+        this.sqlDate = new java.sql.Date(utilDate.getTime());
         this.documentsId = documentsId;
         this.site = site;
         this.date = date;

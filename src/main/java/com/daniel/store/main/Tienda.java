@@ -18,6 +18,7 @@ import com.daniel.store.entity.Product;
 import com.daniel.store.entity.Sale;
 import com.daniel.store.entity.SaleProduct;
 import com.daniel.store.entity.Supplier;
+import com.daniel.store.view.InicioTienda;
 import java.util.List;
 
 /**
@@ -27,9 +28,9 @@ import java.util.List;
 public class Tienda {
      public static void main(String[] args) {
          //llamamos y hacemos visible nuestra pantalla
-         //InicioTienda princ = new InicioTienda ();
-         //princ.setVisible(true);
-         //princ.setLocationRelativeTo(null);
+         InicioTienda princ = new InicioTienda ();
+         princ.setVisible(true);
+         princ.setLocationRelativeTo(null);
          
          ProductDAO productDao = new ProductDAO();
          List<Product> prodcuts = productDao.getAllProductsFromDB();

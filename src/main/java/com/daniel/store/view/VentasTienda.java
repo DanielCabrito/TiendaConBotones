@@ -137,7 +137,7 @@ public class VentasTienda extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnDulceMarinela1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDulceMarinela1ActionPerformed
-        Producto1Paletas producto1=new Producto1Paletas ();
+        ProductsUI producto1=new ProductsUI ();
         producto1.setVisible(true);
         producto1.setLocationRelativeTo(null);
     }//GEN-LAST:event_btnDulceMarinela1ActionPerformed
