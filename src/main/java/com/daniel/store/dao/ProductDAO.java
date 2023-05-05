@@ -31,6 +31,7 @@ public class ProductDAO {
                     p.setPrice(rs.getDouble("PRECIO"));
                     p.setSupplierId(rs.getInt("PROVEEDOR_ID"));
                     p.setNotes(rs.getString("NOTAS"));
+                    p.setStock(rs.getInt("INVENTARIO"));
                     productList.add(p);
                 }
             }

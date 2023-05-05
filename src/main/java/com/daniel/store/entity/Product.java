@@ -16,17 +16,19 @@ public class Product {
     private double price;
     private int supplierId;
     private String notes;
+    private int stock;
 
-    public Product(int productId, String name, String brand, double price, int supplierId, String notes) {
+    public Product() {
+    }
+
+    public Product(int productId, String name, String brand, double price, int supplierId, String notes, int stock) {
         this.productId = productId;
         this.name = name;
         this.brand = brand;
         this.price = price;
         this.supplierId = supplierId;
         this.notes = notes;
-    }
-
-    public Product() {
+        this.stock = stock;
     }
 
     public int getProductId() {
@@ -77,9 +79,21 @@ public class Product {
         this.notes = notes;
     }
 
+    public int getStock() {
+        return stock;
+    }
+
+    public void setStock(int stock) {
+        this.stock = stock;
+    }
+
     @Override
     public String toString() {
-        return "Product{" + "productId=" + productId + ", name=" + name + ", brand=" + brand + ", price=" + price + ", supplierId=" + supplierId + ", notes=" + notes + '}';
+        return "Product{" + "productId=" + productId + ", name=" + name + ", brand=" + brand + ", price=" + price + ", supplierId=" + supplierId + ", notes=" + notes + ", stock=" + stock + '}';
     }
+    
+    
+
+    
 
 }

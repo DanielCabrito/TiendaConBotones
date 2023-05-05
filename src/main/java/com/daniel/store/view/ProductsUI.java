@@ -6,8 +6,9 @@ package com.daniel.store.view;
 
 import com.daniel.store.dao.ProductDAO;
 import com.daniel.store.entity.Product;
+import java.util.ArrayList;
 import java.util.List;
-
+import javax.swing.DefaultListModel;
 /**
  *
  * @author carri
@@ -19,6 +20,7 @@ public class ProductsUI extends javax.swing.JFrame {
      */
     public ProductsUI() {
         initComponents();
+        loadProducts();
     }
 
     /**
@@ -127,7 +129,7 @@ public class ProductsUI extends javax.swing.JFrame {
                 jTextFieldMarcaActionPerformed(evt);
             }
         });
-        jPanelProductos.add(jTextFieldMarca, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 190, 470, -1));
+        jPanelProductos.add(jTextFieldMarca, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 180, 470, -1));
 
         jTextFieldPrecio.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
         jTextFieldPrecio.setForeground(new java.awt.Color(102, 102, 102));
@@ -136,7 +138,7 @@ public class ProductsUI extends javax.swing.JFrame {
                 jTextFieldPrecioActionPerformed(evt);
             }
         });
-        jPanelProductos.add(jTextFieldPrecio, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 320, 470, 50));
+        jPanelProductos.add(jTextFieldPrecio, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 250, 470, -1));
 
         jTextFieldNota.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
         jTextFieldNota.setForeground(new java.awt.Color(102, 102, 102));
@@ -145,7 +147,7 @@ public class ProductsUI extends javax.swing.JFrame {
                 jTextFieldNotaActionPerformed(evt);
             }
         });
-        jPanelProductos.add(jTextFieldNota, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 260, 470, -1));
+        jPanelProductos.add(jTextFieldNota, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 320, 470, -1));
 
         jLabelTituloTabla.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
         jLabelTituloTabla.setForeground(new java.awt.Color(102, 102, 102));
@@ -159,7 +161,7 @@ public class ProductsUI extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(jListProductos);
 
-        jPanelProductos.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 150, 200, 330));
+        jPanelProductos.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 160, 200, 330));
 
         jLabelFondo.setIcon(new javax.swing.ImageIcon("C:\\Users\\carri\\Downloads\\INTERFAZ\\21423.png")); // NOI18N
         jLabelFondo.addHierarchyBoundsListener(new java.awt.event.HierarchyBoundsListener() {
@@ -241,4 +243,20 @@ public class ProductsUI extends javax.swing.JFrame {
     private javax.swing.JTextField jTextFieldPrecio;
     // End of variables declaration//GEN-END:variables
 
+    DefaultListModel productsModel = new DefaultListModel();
+    ProductDAO productDao = new ProductDAO();
+    List<Product> prodcuts;
+    List<String> prodcutsDescription = new ArrayList<>();
+        
+    private void loadProducts() {
+        jListProductos.setModel(productsModel);
+        prodcuts = productDao.getAllProductsFromDB();
+        
+         for(Product p : prodcuts){
+             prodcutsDescription.add(p.getName() + " - " + p.getPrice());
+         }
+         
+        productsModel.addAll(prodcutsDescription);
+    }
+    
 }

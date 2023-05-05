@@ -20,11 +20,10 @@ public class InicioTienda extends javax.swing.JFrame {
         jButton5 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        btnVentas = new javax.swing.JButton();
-        btnInventario = new javax.swing.JButton();
+        btnProveedores = new javax.swing.JButton();
+        btnDocXPagar = new javax.swing.JButton();
         btnProductos = new javax.swing.JButton();
-        btnProvedores = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
+        btnVentas = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
 
         jButton5.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -41,19 +40,19 @@ public class InicioTienda extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 48)); // NOI18N
         jLabel1.setText("Dulceria Cabrito");
 
-        btnVentas.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        btnVentas.setText("PROVEEDORES");
-        btnVentas.addActionListener(new java.awt.event.ActionListener() {
+        btnProveedores.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btnProveedores.setText("PROVEEDORES");
+        btnProveedores.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnVentasActionPerformed(evt);
+                btnProveedoresActionPerformed(evt);
             }
         });
 
-        btnInventario.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        btnInventario.setText("DOC X PAGAR");
-        btnInventario.addActionListener(new java.awt.event.ActionListener() {
+        btnDocXPagar.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btnDocXPagar.setText("DOC X PAGAR");
+        btnDocXPagar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnInventarioActionPerformed(evt);
+                btnDocXPagarActionPerformed(evt);
             }
         });
 
@@ -65,11 +64,11 @@ public class InicioTienda extends javax.swing.JFrame {
             }
         });
 
-        btnProvedores.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        btnProvedores.setText("VENTAS");
-        btnProvedores.addActionListener(new java.awt.event.ActionListener() {
+        btnVentas.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btnVentas.setText("VENTAS");
+        btnVentas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnProvedoresActionPerformed(evt);
+                btnVentasActionPerformed(evt);
             }
         });
 
@@ -82,13 +81,11 @@ public class InicioTienda extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnVentas, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnProveedores, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnProductos, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnInventario, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnProvedores, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnDocXPagar, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnVentas, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel4)
                 .addGap(39, 39, 39))
             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -101,22 +98,17 @@ public class InicioTienda extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(29, 29, 29)
                 .addComponent(jLabel1)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(49, 49, 49)
-                        .addComponent(jLabel3))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(btnProductos, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(33, 33, 33)
-                                .addComponent(btnVentas, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnInventario, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(28, 28, 28)
-                                .addComponent(btnProvedores, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING))))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnProductos, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(33, 33, 33)
+                        .addComponent(btnProveedores, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(30, 30, 30)
+                        .addComponent(btnDocXPagar, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnVentas, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING))
                 .addContainerGap(86, Short.MAX_VALUE))
         );
 
@@ -134,13 +126,17 @@ public class InicioTienda extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVentasActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnVentasActionPerformed
+    private void btnProveedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProveedoresActionPerformed
+       ProveedoresUI supplierUI =new ProveedoresUI();
+       supplierUI.setVisible(true);
+       supplierUI.setLocationRelativeTo(null);
+    }//GEN-LAST:event_btnProveedoresActionPerformed
 
-    private void btnInventarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInventarioActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnInventarioActionPerformed
+    private void btnDocXPagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDocXPagarActionPerformed
+      DocumentsUI documentsUi = new DocumentsUI ();
+      documentsUi.setVisible(true);
+      documentsUi.setLocationRelativeTo(null);
+    }//GEN-LAST:event_btnDocXPagarActionPerformed
 
     private void btnProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProductosActionPerformed
         ProductsUI ui =new ProductsUI();
@@ -148,9 +144,11 @@ public class InicioTienda extends javax.swing.JFrame {
         ui.setLocationRelativeTo(null);
     }//GEN-LAST:event_btnProductosActionPerformed
 
-    private void btnProvedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProvedoresActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnProvedoresActionPerformed
+    private void btnVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVentasActionPerformed
+        SaleProductsUI salesUi = new SaleProductsUI();
+        salesUi.setVisible(true);
+        salesUi.setLocationRelativeTo(null);
+    }//GEN-LAST:event_btnVentasActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
       
@@ -160,13 +158,12 @@ public class InicioTienda extends javax.swing.JFrame {
    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnInventario;
+    private javax.swing.JButton btnDocXPagar;
     private javax.swing.JButton btnProductos;
-    private javax.swing.JButton btnProvedores;
+    private javax.swing.JButton btnProveedores;
     private javax.swing.JButton btnVentas;
     private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
