@@ -35,7 +35,7 @@ public class SupplierDAO {
                     Supplier p = new Supplier();
                     p.setSupplierId(rs.getInt("PROVEEDOR_ID"));
                     p.setName(rs.getString("NOMBRE"));
-                    p.setPhoneNumber(rs.getInt("TELEFONO"));
+                    p.setPhoneNumber(rs.getString("TELEFONO"));
                     p.setAdress(rs.getString("DIRECCION"));
                     p.setNote(rs.getString("NOTAS"));
                     supplierList.add(p);

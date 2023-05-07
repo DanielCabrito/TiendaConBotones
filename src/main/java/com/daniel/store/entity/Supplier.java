@@ -11,14 +11,14 @@ package com.daniel.store.entity;
 public class Supplier {
     private int supplierId;
     private String name;
-    private int phoneNumber;
+    private String phoneNumber;
     private String adress;
     private String note;
 
     public Supplier() {
     }
 
-    public Supplier(int supplierId, String name, int phoneNumber, String adress, String note) {
+    public Supplier(int supplierId, String name, String phoneNumber, String adress, String note) {
         this.supplierId = supplierId;
         this.name = name;
         this.phoneNumber = phoneNumber;
@@ -42,11 +42,11 @@ public class Supplier {
         this.name = name;
     }
 
-    public int getPhoneNumber() {
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(int phoneNumber) {
+    public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
@@ -68,8 +68,9 @@ public class Supplier {
 
     @Override
     public String toString() {
-        return "supplier{" + "supplierId=" + supplierId + ", name=" + name + ", phoneNumber=" + phoneNumber + ", adress=" + adress + ", note=" + note + '}';
+        return "Supplier{" + "supplierId=" + supplierId + ", name=" + name + ", phoneNumber=" + phoneNumber + ", adress=" + adress + ", note=" + note + '}';
     }
+
     
     
 }

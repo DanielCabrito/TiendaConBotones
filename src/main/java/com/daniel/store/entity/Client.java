@@ -13,13 +13,13 @@ public class Client {
     private String name;
     private String address;
     private String rfc;
-    private int phoneNumber;
+    private String phoneNumber;
     private String email;
 
     public Client() {
     }
 
-    public Client(int clientId, String name, String address, String rfc, int phoneNumber, String email) {
+    public Client(int clientId, String name, String address, String rfc, String phoneNumber, String email) {
         this.clientId = clientId;
         this.name = name;
         this.address = address;
@@ -60,11 +60,11 @@ public class Client {
         this.rfc = rfc;
     }
 
-    public int getPhoneNumber() {
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(int phoneNumber) {
+    public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
@@ -78,8 +78,10 @@ public class Client {
 
     @Override
     public String toString() {
-        return "client{" + "clientId=" + clientId + ", name=" + name + ", address=" + address + ", rfc=" + rfc + ", phoneNumber=" + phoneNumber + ", email=" + email + '}';
+        return "Client{" + "clientId=" + clientId + ", name=" + name + ", address=" + address + ", rfc=" + rfc + ", phoneNumber=" + phoneNumber + ", email=" + email + '}';
     }
+
+   
 
     
    

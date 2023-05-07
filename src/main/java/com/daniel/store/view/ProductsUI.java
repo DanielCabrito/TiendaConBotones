@@ -196,7 +196,18 @@ public class ProductsUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonEliminarActionPerformed
 
     private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
-        // TODO add your handling code here:
+       Product producto=new Product();
+        String name= this.jTextFieldNombre.getText();
+        producto.setName(name);
+        String brand = this.jTextFieldMarca.getText();
+        producto.setBrand(brand);
+        float precio =Float.parseFloat(this.jTextFieldPrecio.getText());
+        producto.setPrice(precio);
+        String note =this.jTextFieldNota.getText();
+        producto.setNotes(note);
+        System.out.println(producto);
+        
+
     }//GEN-LAST:event_jButtonGuardarActionPerformed
 
     private void jLabelFondoAncestorMoved(java.awt.event.HierarchyEvent evt) {//GEN-FIRST:event_jLabelFondoAncestorMoved

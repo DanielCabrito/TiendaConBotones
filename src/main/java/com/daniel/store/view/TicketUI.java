@@ -45,8 +45,6 @@ public class TicketUI extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jListProductos = new javax.swing.JList<>();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
         jLabelTitulo.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
         jLabelTitulo.setForeground(new java.awt.Color(0, 0, 0));
         jLabelTitulo.setText("TICKET");

@@ -91,6 +91,10 @@ public class Product {
     public String toString() {
         return "Product{" + "productId=" + productId + ", name=" + name + ", brand=" + brand + ", price=" + price + ", supplierId=" + supplierId + ", notes=" + notes + ", stock=" + stock + '}';
     }
+
+    public void getPrice(String price) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
     
     
 

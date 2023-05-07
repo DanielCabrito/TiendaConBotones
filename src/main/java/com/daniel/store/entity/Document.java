@@ -21,6 +21,7 @@ public class Document {
     private Date date;
     private Date datePay;
     private float amountPay;
+    private String siteCompany;
     private int supplierId;
 
 
@@ -30,14 +31,30 @@ public class Document {
        
     }
 
-    public Document(int documentsId, String site, Date date, Date datePay, float amountPay, int supplierId) {
-        this.sqlDate = new java.sql.Date(utilDate.getTime());
+    public Document(int documentsId, String site, Date date, Date datePay, float amountPay, String siteCompany, int supplierId) {
         this.documentsId = documentsId;
         this.site = site;
         this.date = date;
         this.datePay = datePay;
         this.amountPay = amountPay;
+        this.siteCompany = siteCompany;
         this.supplierId = supplierId;
+    }
+
+    public java.util.Date getUtilDate() {
+        return utilDate;
+    }
+
+    public void setUtilDate(java.util.Date utilDate) {
+        this.utilDate = utilDate;
+    }
+
+    public Date getSqlDate() {
+        return sqlDate;
+    }
+
+    public void setSqlDate(Date sqlDate) {
+        this.sqlDate = sqlDate;
     }
 
     public int getDocumentsId() {
@@ -80,6 +97,14 @@ public class Document {
         this.amountPay = amountPay;
     }
 
+    public String getSiteCompany() {
+        return siteCompany;
+    }
+
+    public void setSiteCompany(String siteCompany) {
+        this.siteCompany = siteCompany;
+    }
+
     public int getSupplierId() {
         return supplierId;
     }
@@ -90,8 +115,10 @@ public class Document {
 
     @Override
     public String toString() {
-        return "Document{" + "documentsId=" + documentsId + ", site=" + site + ", date=" + date + ", datePay=" + datePay + ", amountPay=" + amountPay + ", supplierId=" + supplierId + '}';
+        return "Document{" + "utilDate=" + utilDate + ", sqlDate=" + sqlDate + ", documentsId=" + documentsId + ", site=" + site + ", date=" + date + ", datePay=" + datePay + ", amountPay=" + amountPay + ", siteCompany=" + siteCompany + ", supplierId=" + supplierId + '}';
     }
+
+    
 
    
 

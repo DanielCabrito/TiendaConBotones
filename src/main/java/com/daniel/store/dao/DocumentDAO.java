@@ -32,11 +32,12 @@ public class DocumentDAO {
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     Document p = new Document();
-                    p.setDocumentsId(rs.getInt("DOCUMETO_ID"));
+                    p.setDocumentsId(rs.getInt("DOCUMENTO_ID"));
                     p.setSite(rs.getString("LUGAR"));
                     p.setDate(rs.getDate("FECHA"));
                     p.setDatePay(rs.getDate("FECHA_A_PAGAR"));
                     p.setAmountPay(rs.getFloat("MONTO_A_PAGAR"));
+                    p.setSiteCompany(rs.getString("DIRECCION_EMPRESA"));
                     p.setSupplierId(rs.getInt("PROVEEDORES_PROVEEDOR_ID1"));
                     documentList.add(p);
                 }

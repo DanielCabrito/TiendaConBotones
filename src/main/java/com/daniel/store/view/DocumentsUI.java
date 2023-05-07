@@ -5,9 +5,14 @@
 package com.daniel.store.view;
 
 import com.daniel.store.dao.DocumentDAO;
+import com.daniel.store.dao.SupplierDAO;
 import com.daniel.store.entity.Document;
+import com.daniel.store.entity.Supplier;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.ComboBoxModel;
 import javax.swing.DefaultListModel;
 
 /**
@@ -22,6 +27,7 @@ public class DocumentsUI extends javax.swing.JFrame {
     public DocumentsUI() {
         initComponents();
         loadDocuments();
+        //loadSuppliers();
     }
 
     /**
@@ -52,9 +58,10 @@ public class DocumentsUI extends javax.swing.JFrame {
         jButtonGuardar = new javax.swing.JButton();
         jButtonCancelar = new javax.swing.JButton();
         jButtonPagar = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jListDocumentosPagar = new javax.swing.JList<>();
         jLabelTitulo1 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jListDocumentosPorPagar = new javax.swing.JList<>();
+        jComboBoxNameCompany = new javax.swing.JComboBox<>();
         jLabelFondoDePantalla = new javax.swing.JLabel();
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -176,14 +183,21 @@ public class DocumentsUI extends javax.swing.JFrame {
         });
         jPanel1.add(jButtonPagar, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 450, 150, 50));
 
-        jScrollPane1.setViewportView(jListDocumentosPagar);
-
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 290, 250, -1));
-
         jLabelTitulo1.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
         jLabelTitulo1.setForeground(new java.awt.Color(102, 102, 102));
         jLabelTitulo1.setText("DOCUMENTOS POR PAGAR");
         jPanel1.add(jLabelTitulo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 250, -1, -1));
+
+        jScrollPane2.setViewportView(jListDocumentosPorPagar);
+
+        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 280, 280, -1));
+
+        jComboBoxNameCompany.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxNameCompanyActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jComboBoxNameCompany, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 350, 270, -1));
 
         jLabelFondoDePantalla.setIcon(new javax.swing.ImageIcon("C:\\Users\\carri\\Downloads\\INTERFAZ\\21423.png")); // NOI18N
         jPanel1.add(jLabelFondoDePantalla, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 953, 519));
@@ -227,7 +241,24 @@ public class DocumentsUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField_IDActionPerformed
 
     private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
-        // TODO add your handling code here:
+     Document document=new Document();
+     int idDocumento = Integer.parseInt(this.jTextField_ID.getText());
+     document.setDocumentsId(idDocumento);
+     String site= this.jTextField_Lugar.getText();
+     document.setSite(site);
+     /*String site=(this.jTextField_Lugar.getText());
+     document.setSite(site);
+     SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");/*
+     */
+     float price=Float.parseFloat(this.jTextField_MontoAPagar.getText());
+     document.setAmountPay(price);
+     /*FECHA A PAGAR FALTA */
+     String siteCompany=this.jTextField_DireccionEmpresa.getText();
+     document.setSiteCompany(siteCompany);
+        System.out.println(document);
+        
+
+     
     }//GEN-LAST:event_jButtonGuardarActionPerformed
 
     private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarActionPerformed
@@ -238,11 +269,16 @@ public class DocumentsUI extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButtonPagarActionPerformed
 
-   
+    private void jComboBoxNameCompanyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxNameCompanyActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBoxNameCompanyActionPerformed
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonCancelar;
     private javax.swing.JButton jButtonGuardar;
     private javax.swing.JButton jButtonPagar;
+    private javax.swing.JComboBox<String> jComboBoxNameCompany;
     private javax.swing.JLabel jLabelDatosEmpresa;
     private javax.swing.JLabel jLabelFondoDePantalla;
     private javax.swing.JLabel jLabelNombreEmpresa;
@@ -254,9 +290,9 @@ public class DocumentsUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel_ID;
     private javax.swing.JLabel jLabel_Lugar;
     private javax.swing.JLabel jLabel_MontoAPagar;
-    private javax.swing.JList<String> jListDocumentosPagar;
+    private javax.swing.JList<String> jListDocumentosPorPagar;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextField jTextField_DireccionEmpresa;
     private javax.swing.JTextField jTextField_Fecha;
     private javax.swing.JTextField jTextField_FechaAPagar;
@@ -268,15 +304,31 @@ public class DocumentsUI extends javax.swing.JFrame {
     DocumentDAO documentDao = new DocumentDAO();
     List<Document> documents;
     List<String> documentsDescription = new ArrayList<>();
-        
+
     private void loadDocuments() {
-        jListDocumentosPagar.setModel(documentsModel);
+        jListDocumentosPorPagar.setModel(documentsModel);
         documents = documentDao.getAllDocumentFromDB();
-        
-         for(Document p : documents){
-             documentsDescription.add(p.getSupplierId() + " - " + p.getAmountPay());
-         }
-         
+
+        for (Document p : documents) {
+            documentsDescription.add(p.getSupplierId() + " - " + p.getAmountPay());
+        }
+
         documentsModel.addAll(documentsDescription);
     }
+
+   /** DefaultListModel supplierModel = new DefaultListModel();
+    SupplierDAO supplierDao = new SupplierDAO();
+    List<Supplier> suppliers;
+    List<String> suppliersDescription = new ArrayList<>();
+
+    private void loadSuppliers() {
+        jComboBoxNameCompany.setModel();
+        suppliers = supplierDao.getAllSupplierFromDB();
+
+        for (Supplier p : suppliers) {
+            suppliersDescription.add(p.getSupplierId() + " - " + p.getName());
+        }
+
+        supplierModel.addAll(suppliersDescription);
+    }*/
 }

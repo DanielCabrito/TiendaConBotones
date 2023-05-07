@@ -36,7 +36,7 @@ public class ClientDAO {
                     p.setName(rs.getString("NOMBRE"));
                     p.setAddress(rs.getString("DIRECCION"));
                     p.setRfc(rs.getString("RFC"));
-                    p.setPhoneNumber(rs.getInt("TELEFONO"));
+                    p.setPhoneNumber(rs.getString("TELEFONO"));
                     p.setEmail(rs.getString("CORREO"));
                     clientList.add(p);
                 }

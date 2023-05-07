@@ -63,7 +63,7 @@ public class SaleProductsUI extends javax.swing.JFrame {
 
         jButtonAgregar.setBackground(new java.awt.Color(255, 255, 255));
         jButtonAgregar.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
-        jButtonAgregar.setText("Agregar");
+        jButtonAgregar.setText("Guardar");
         jButtonAgregar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonAgregarActionPerformed(evt);
@@ -223,7 +223,11 @@ public class SaleProductsUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonPagarActionPerformed
 
     private void jButtonAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAgregarActionPerformed
-        // TODO add your handling code here:
+        SaleProduct saleProductUi=new SaleProduct();
+        int productId= Integer.parseInt (this.jTextFieldNombre.getText());
+        saleProductUi.setProductId(productId);
+        
+        
     }//GEN-LAST:event_jButtonAgregarActionPerformed
 
     private void jTextFieldNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldNombreActionPerformed
@@ -297,11 +301,11 @@ public class SaleProductsUI extends javax.swing.JFrame {
         jListCarrito.setModel(salesproductsModel);
         saleProducts = saleProductDao.getAllSaleProductFromDB();
         
-         for(SaleProduct p : saleProducts){
-             prodcutsDescription.add( " ID Producto " + p.getProductId() + " -Cantidad " + p.getAmount() + " -$ " + p.getUnitPrice());
+         for(SaleProduct a : saleProducts){
+             salesProductsDescription.add( " ID Producto " + a.getProductId() + " -Cantidad " + a.getAmount() + " -$ " + a.getUnitPrice());
          }
          
-        productsModel.addAll(prodcutsDescription);
+        salesproductsModel.addAll(salesProductsDescription);
     }
     
 }

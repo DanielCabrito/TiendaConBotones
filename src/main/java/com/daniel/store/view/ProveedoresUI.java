@@ -155,7 +155,17 @@ public class ProveedoresUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jToggleButtonEliminarActionPerformed
 
     private void jToggleButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonGuardarActionPerformed
-        // TODO add your handling code here:
+       Supplier supplierUi =new Supplier();
+       String name=this.jTextFieldNombre.getText();
+       supplierUi.setName(name);
+       String phoneNumber=this.jTextFieldTelefono.getText();
+       supplierUi.setPhoneNumber(phoneNumber);
+       String adress=this.jTextFieldDireccion.getText();
+       supplierUi.setAdress(adress);
+       String note=this.jTextFieldNota.getText();
+       supplierUi.setNote(note);
+        System.out.println(supplierUi);
+       
     }//GEN-LAST:event_jToggleButtonGuardarActionPerformed
 
     private void jListProveedoresComponentHidden(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jListProveedoresComponentHidden
