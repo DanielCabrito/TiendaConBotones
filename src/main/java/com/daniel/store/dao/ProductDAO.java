@@ -42,4 +42,23 @@ public class ProductDAO {
         return productList;
     }
 
+    public boolean setProductToDB(Product producto) {
+        String sql = "INSERT INTO tiendacabrito.PRODUCTOS (NOMBRE, MARCA, PRECIO, PROVEEDOR_ID, NOTAS) "
+                + "VALUES (?,?,?,?,?)";
+        try (Connection con = DriverManager.getConnection( myConnectionURL, user, pwd);
+                PreparedStatement ps = con.prepareStatement(sql)) {
+            
+            ps.setString(1, producto.getName());
+            ps.setString(2, producto.getBrand());
+            ps.setDouble(3, producto.getPrice());
+            ps.setInt(4, producto.getSupplierId());
+            ps.setString(5, producto.getNotes());
+           
+            return ps.executeUpdate()>0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
 }

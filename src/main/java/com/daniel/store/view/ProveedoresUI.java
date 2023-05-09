@@ -9,6 +9,7 @@ import com.daniel.store.entity.Supplier;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -164,7 +165,15 @@ public class ProveedoresUI extends javax.swing.JFrame {
        supplierUi.setAdress(adress);
        String note=this.jTextFieldNota.getText();
        supplierUi.setNote(note);
+       supplierUi.setSupplierId(1);
         System.out.println(supplierUi);
+       
+       boolean saved=  supplierDao.setProductToDB(supplierUi);
+       if(saved){
+           JOptionPane.showMessageDialog(null, "Proveedor agregado", "Proveedores", JOptionPane.INFORMATION_MESSAGE);
+       }else{
+           JOptionPane.showMessageDialog(null, "ERROR: Proveedor no guaradado", "Proveedores", JOptionPane.ERROR_MESSAGE);
+       }
        
     }//GEN-LAST:event_jToggleButtonGuardarActionPerformed
 

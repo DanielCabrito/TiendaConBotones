@@ -47,4 +47,23 @@ public class ClientDAO {
         
         return clientList;
     }
+    
+     public boolean setClientToDB(Client client) {
+        String sql = "INSERT INTO tiendacabrito.CLIENTES (NOMBRE, DIRECCION, RFC, TELEFONO, CORREO) "
+                + "VALUES (?,?,?,?,?)";
+        try (Connection con = DriverManager.getConnection( myConnectionURL, user, pwd);
+                PreparedStatement ps = con.prepareStatement(sql)) {
+            
+            ps.setString(1, client.getName());
+            ps.setString(2, client.getAddress());
+            ps.setString(3, client.getRfc());
+            ps.setString(4, client.getPhoneNumber());
+            ps.setString(5, client.getEmail());
+           
+            return ps.executeUpdate()>0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

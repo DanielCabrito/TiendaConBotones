@@ -9,6 +9,7 @@ import com.daniel.store.entity.Product;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 /**
  *
  * @author carri
@@ -50,6 +51,7 @@ public class ProductsUI extends javax.swing.JFrame {
         jLabelTituloTabla = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jListProductos = new javax.swing.JList<>();
+        jComboBox1 = new javax.swing.JComboBox<>();
         jLabelFondo = new javax.swing.JLabel();
 
         jTextArea1.setColumns(20);
@@ -163,6 +165,9 @@ public class ProductsUI extends javax.swing.JFrame {
 
         jPanelProductos.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 160, 200, 330));
 
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jPanelProductos.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 410, 400, -1));
+
         jLabelFondo.setIcon(new javax.swing.ImageIcon("C:\\Users\\carri\\Downloads\\INTERFAZ\\21423.png")); // NOI18N
         jLabelFondo.addHierarchyBoundsListener(new java.awt.event.HierarchyBoundsListener() {
             public void ancestorMoved(java.awt.event.HierarchyEvent evt) {
@@ -205,9 +210,16 @@ public class ProductsUI extends javax.swing.JFrame {
         producto.setPrice(precio);
         String note =this.jTextFieldNota.getText();
         producto.setNotes(note);
+        //TODO:¨Obtener del ComboBox
+        producto.setSupplierId(1);
         System.out.println(producto);
         
-
+        boolean saved = productDao.setProductToDB(producto);
+        if(saved){
+            JOptionPane.showMessageDialog(null, "Producto Guardado", "Productos", JOptionPane.INFORMATION_MESSAGE);
+        }else{
+            JOptionPane.showMessageDialog(null, "ERROR:¨Producto NO Guardado", "Productos " , JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_jButtonGuardarActionPerformed
 
     private void jLabelFondoAncestorMoved(java.awt.event.HierarchyEvent evt) {//GEN-FIRST:event_jLabelFondoAncestorMoved
@@ -236,6 +248,7 @@ public class ProductsUI extends javax.swing.JFrame {
     private javax.swing.JButton jButtonCancelar;
     private javax.swing.JButton jButtonEliminar;
     private javax.swing.JButton jButtonGuardar;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabelFondo;
     private javax.swing.JLabel jLabelMarca;
     private javax.swing.JLabel jLabelNombre;

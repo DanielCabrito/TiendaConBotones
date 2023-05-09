@@ -47,4 +47,21 @@ public class SaleProductDAO {
         
         return saleProductList;
     }
+    
+     public boolean setSaleProductToDB(SaleProduct saleProductoUi) {
+        String sql = "INSERT INTO tiendacabrito.VENTA_PRODUCTO (PRODUCTO_ID, CANTIDAD, PRECIO_UNIDAD) "
+                + "VALUES (?,?,?)";
+        try (Connection con = DriverManager.getConnection( myConnectionURL, user, pwd);
+                PreparedStatement ps = con.prepareStatement(sql)) {
+            
+            ps.setInt(1, saleProductoUi.getProductId());
+            ps.setInt(2, saleProductoUi.getAmount());
+            ps.setDouble(3, saleProductoUi.getUnitPrice());
+          
+            return ps.executeUpdate()>0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

@@ -48,4 +48,24 @@ public class DocumentDAO {
         
         return documentList;
     }
+    
+    public boolean setProductToDB(Document document) {
+        String sql = "INSERT INTO tiendacabrito.DOCUMENTOS_POR_PAGAR (DOCUMENTO_ID, LUGAR, FECHA, FECHA_A_PAGAR, MONTO_A_PAGAR, DIRECCION_EMPRESA) "
+                + "VALUES (?,?,?,?,?,?)";
+        try (Connection con = DriverManager.getConnection( myConnectionURL, user, pwd);
+                PreparedStatement ps = con.prepareStatement(sql)) {
+            
+            ps.setInt(1, document.getDocumentsId());
+            ps.setString(2, document.getSite());
+            ps.setDate(3, document.getDate());
+            ps.setDate(4, document.getDatePay());
+            ps.setFloat(5, document.getAmountPay());
+            ps.setString(6,document.getSiteCompany());
+           
+            return ps.executeUpdate()>0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

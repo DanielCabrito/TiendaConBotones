@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -246,10 +247,7 @@ public class DocumentsUI extends javax.swing.JFrame {
      document.setDocumentsId(idDocumento);
      String site= this.jTextField_Lugar.getText();
      document.setSite(site);
-     /*String site=(this.jTextField_Lugar.getText());
-     document.setSite(site);
-     SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");/*
-     */
+     //falta la fecha 
      float price=Float.parseFloat(this.jTextField_MontoAPagar.getText());
      document.setAmountPay(price);
      /*FECHA A PAGAR FALTA */
@@ -257,6 +255,12 @@ public class DocumentsUI extends javax.swing.JFrame {
      document.setSiteCompany(siteCompany);
         System.out.println(document);
         
+        boolean saved = documentDao.setProductToDB(document);
+        if(saved){
+            JOptionPane.showMessageDialog(null, "Documento guardado", "Documentos", JOptionPane.INFORMATION_MESSAGE);
+        }else{
+            JOptionPane.showMessageDialog(null, "ERROR: Documento No Guardado", "Documentos", JOptionPane.INFORMATION_MESSAGE);
+        }
 
      
     }//GEN-LAST:event_jButtonGuardarActionPerformed

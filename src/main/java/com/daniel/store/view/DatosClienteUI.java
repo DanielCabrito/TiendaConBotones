@@ -9,6 +9,7 @@ import com.daniel.store.entity.Client;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -214,7 +215,17 @@ public class DatosClienteUI extends javax.swing.JFrame {
        clientUi.setPhoneNumber(cellPhone);
        String email=this.jTextCorreo.getText();
        clientUi.setEmail(email);
+       clientUi.setClientId(1);
         System.out.println(clientUi);
+        
+        
+        boolean saved = clientDao.setClientToDB(clientUi);
+        if (saved){
+            JOptionPane.showMessageDialog(null, "Cliente guardado", "Cliente", JOptionPane.INFORMATION_MESSAGE);
+        }else{
+            JOptionPane.showMessageDialog(null, "ERROR:Cliete No Guardado", "Cliente", JOptionPane.INFORMATION_MESSAGE);
+        }
+        
     }//GEN-LAST:event_jButtonGuardarActionPerformed
 
     private void jTextFieldNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldNombreActionPerformed

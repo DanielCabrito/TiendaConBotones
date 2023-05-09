@@ -47,4 +47,22 @@ public class SupplierDAO {
         
         return supplierList;
     }
+    
+    public boolean setProductToDB(Supplier supplierUi) {
+        String sql = "INSERT INTO tiendacabrito.PROVEEDORES (NOMBRE, TELEFONO, DIRECCION, NOTAS) "
+                + "VALUES (?,?,?,?)";
+        try (Connection con = DriverManager.getConnection( myConnectionURL, user, pwd);
+                PreparedStatement ps = con.prepareStatement(sql)) {
+            
+            ps.setString(1, supplierUi.getName());
+            ps.setString(2, supplierUi.getPhoneNumber());
+            ps.setString(3, supplierUi.getAdress());
+            ps.setString(4, supplierUi.getNote());
+           
+            return ps.executeUpdate()>0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }
