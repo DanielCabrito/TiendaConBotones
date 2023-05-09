@@ -9,10 +9,14 @@ import com.daniel.store.dao.SupplierDAO;
 import com.daniel.store.entity.Document;
 import com.daniel.store.entity.Supplier;
 import java.sql.Date;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ComboBoxModel;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
@@ -28,7 +32,7 @@ public class DocumentsUI extends javax.swing.JFrame {
     public DocumentsUI() {
         initComponents();
         loadDocuments();
-        //loadSuppliers();
+        loadSupliers();
     }
 
     /**
@@ -57,7 +61,7 @@ public class DocumentsUI extends javax.swing.JFrame {
         jTextField_FechaAPagar = new javax.swing.JTextField();
         jTextField_DireccionEmpresa = new javax.swing.JTextField();
         jButtonGuardar = new javax.swing.JButton();
-        jButtonCancelar = new javax.swing.JButton();
+        jButtonLimpiar = new javax.swing.JButton();
         jButtonPagar = new javax.swing.JButton();
         jLabelTitulo1 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -164,15 +168,15 @@ public class DocumentsUI extends javax.swing.JFrame {
         });
         jPanel1.add(jButtonGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 450, 150, 50));
 
-        jButtonCancelar.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
-        jButtonCancelar.setForeground(new java.awt.Color(102, 102, 102));
-        jButtonCancelar.setText("Cancelar");
-        jButtonCancelar.addActionListener(new java.awt.event.ActionListener() {
+        jButtonLimpiar.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
+        jButtonLimpiar.setForeground(new java.awt.Color(102, 102, 102));
+        jButtonLimpiar.setText("Limpiar");
+        jButtonLimpiar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonCancelarActionPerformed(evt);
+                jButtonLimpiarActionPerformed(evt);
             }
         });
-        jPanel1.add(jButtonCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 450, 150, 50));
+        jPanel1.add(jButtonLimpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 450, 150, 50));
 
         jButtonPagar.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
         jButtonPagar.setForeground(new java.awt.Color(102, 102, 102));
@@ -247,12 +251,33 @@ public class DocumentsUI extends javax.swing.JFrame {
      document.setDocumentsId(idDocumento);
      String site= this.jTextField_Lugar.getText();
      document.setSite(site);
-     //falta la fecha 
+     document.setSupplierId(1);
+     
      float price=Float.parseFloat(this.jTextField_MontoAPagar.getText());
      document.setAmountPay(price);
-     /*FECHA A PAGAR FALTA */
      String siteCompany=this.jTextField_DireccionEmpresa.getText();
      document.setSiteCompany(siteCompany);
+     
+    try {
+        String dateString = this.jTextField_Fecha.getText();
+        long time;
+        time = new SimpleDateFormat("dd-MM-yyyy").parse(dateString).getTime();
+        document.setDate(new Date(time));
+    } catch (ParseException ex) {
+        Logger.getLogger(DocumentsUI.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    
+    
+    try {
+        String dateString = this.jTextField_FechaAPagar.getText();
+        long time;
+        time = new SimpleDateFormat("dd-MM-yyyy").parse(dateString).getTime();
+        document.setDatePay(new Date(time));
+    } catch (ParseException ex) {
+        Logger.getLogger(DocumentsUI.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    
+    
         System.out.println(document);
         
         boolean saved = documentDao.setProductToDB(document);
@@ -265,9 +290,15 @@ public class DocumentsUI extends javax.swing.JFrame {
      
     }//GEN-LAST:event_jButtonGuardarActionPerformed
 
-    private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButtonCancelarActionPerformed
+    private void jButtonLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLimpiarActionPerformed
+        jTextField_DireccionEmpresa.setText("");
+        jTextField_Fecha.setText(" ");
+        jTextField_FechaAPagar.setText(" ");
+        jTextField_ID.setText(" ");
+        jTextField_Lugar.setText(" ");
+        jTextField_MontoAPagar.setText(" ");
+        
+    }//GEN-LAST:event_jButtonLimpiarActionPerformed
 
     private void jButtonPagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPagarActionPerformed
         // TODO add your handling code here:
@@ -279,8 +310,8 @@ public class DocumentsUI extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButtonCancelar;
     private javax.swing.JButton jButtonGuardar;
+    private javax.swing.JButton jButtonLimpiar;
     private javax.swing.JButton jButtonPagar;
     private javax.swing.JComboBox<String> jComboBoxNameCompany;
     private javax.swing.JLabel jLabelDatosEmpresa;
@@ -335,4 +366,19 @@ public class DocumentsUI extends javax.swing.JFrame {
 
         supplierModel.addAll(suppliersDescription);
     }*/
+    
+    SupplierDAO supplierDao = new SupplierDAO();
+    List<Supplier> suppliers;
+    List<String> suppliersDescription = new ArrayList<>();
+        
+    private void loadSupliers(){
+        suppliers = supplierDao.getAllSupplierFromDB();
+        
+         for(Supplier p :suppliers ){
+             suppliersDescription.add(p.getName());
+         }
+         
+        jComboBoxNameCompany.setModel(new DefaultComboBoxModel<>(suppliersDescription.toArray(String[]::new)));
+
+    }
 }

@@ -38,7 +38,7 @@ public class DocumentDAO {
                     p.setDatePay(rs.getDate("FECHA_A_PAGAR"));
                     p.setAmountPay(rs.getFloat("MONTO_A_PAGAR"));
                     p.setSiteCompany(rs.getString("DIRECCION_EMPRESA"));
-                    p.setSupplierId(rs.getInt("PROVEEDORES_PROVEEDOR_ID1"));
+                    p.setSupplierId(rs.getInt("PROVEEDOR_ID"));
                     documentList.add(p);
                 }
             }
@@ -50,8 +50,8 @@ public class DocumentDAO {
     }
     
     public boolean setProductToDB(Document document) {
-        String sql = "INSERT INTO tiendacabrito.DOCUMENTOS_POR_PAGAR (DOCUMENTO_ID, LUGAR, FECHA, FECHA_A_PAGAR, MONTO_A_PAGAR, DIRECCION_EMPRESA) "
-                + "VALUES (?,?,?,?,?,?)";
+        String sql = "INSERT INTO tiendacabrito.DOCUMENTOS_POR_PAGAR (DOCUMENTO_ID, LUGAR, FECHA, FECHA_A_PAGAR, MONTO_A_PAGAR, DIRECCION_EMPRESA, PROVEEDOR_ID) "
+                + "VALUES (?,?,?,?,?,?,?)";
         try (Connection con = DriverManager.getConnection( myConnectionURL, user, pwd);
                 PreparedStatement ps = con.prepareStatement(sql)) {
             
@@ -61,6 +61,7 @@ public class DocumentDAO {
             ps.setDate(4, document.getDatePay());
             ps.setFloat(5, document.getAmountPay());
             ps.setString(6,document.getSiteCompany());
+            ps.setInt(7, document.getSupplierId());
            
             return ps.executeUpdate()>0;
         } catch (SQLException e) {

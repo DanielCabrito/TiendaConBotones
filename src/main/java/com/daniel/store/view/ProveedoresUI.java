@@ -22,7 +22,7 @@ public class ProveedoresUI extends javax.swing.JFrame {
      */
     public ProveedoresUI() {
         initComponents();
-        loadSuppliers ();
+        loadSuppliers();
     }
 
     /**
@@ -89,7 +89,12 @@ public class ProveedoresUI extends javax.swing.JFrame {
 
         jToggleButtonCancelar.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
         jToggleButtonCancelar.setForeground(new java.awt.Color(102, 102, 102));
-        jToggleButtonCancelar.setText("Cancelar");
+        jToggleButtonCancelar.setText("Limpiar");
+        jToggleButtonCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButtonCancelarActionPerformed(evt);
+            }
+        });
         getContentPane().add(jToggleButtonCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 580, 140, 50));
 
         jLabelTelefono.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
@@ -156,32 +161,39 @@ public class ProveedoresUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jToggleButtonEliminarActionPerformed
 
     private void jToggleButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonGuardarActionPerformed
-       Supplier supplierUi =new Supplier();
-       String name=this.jTextFieldNombre.getText();
-       supplierUi.setName(name);
-       String phoneNumber=this.jTextFieldTelefono.getText();
-       supplierUi.setPhoneNumber(phoneNumber);
-       String adress=this.jTextFieldDireccion.getText();
-       supplierUi.setAdress(adress);
-       String note=this.jTextFieldNota.getText();
-       supplierUi.setNote(note);
-       supplierUi.setSupplierId(1);
+        Supplier supplierUi = new Supplier();
+        String name = this.jTextFieldNombre.getText();
+        supplierUi.setName(name);
+        String phoneNumber = this.jTextFieldTelefono.getText();
+        supplierUi.setPhoneNumber(phoneNumber);
+        String adress = this.jTextFieldDireccion.getText();
+        supplierUi.setAdress(adress);
+        String note = this.jTextFieldNota.getText();
+        supplierUi.setNote(note);
+        supplierUi.setSupplierId(1);
         System.out.println(supplierUi);
-       
-       boolean saved=  supplierDao.setProductToDB(supplierUi);
-       if(saved){
-           JOptionPane.showMessageDialog(null, "Proveedor agregado", "Proveedores", JOptionPane.INFORMATION_MESSAGE);
-       }else{
-           JOptionPane.showMessageDialog(null, "ERROR: Proveedor no guaradado", "Proveedores", JOptionPane.ERROR_MESSAGE);
-       }
-       
+        
+        boolean saved = supplierDao.setProductToDB(supplierUi);
+        if (saved) {
+            JOptionPane.showMessageDialog(null, "Proveedor agregado", "Proveedores", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null, "ERROR: Proveedor no guaradado", "Proveedores", JOptionPane.ERROR_MESSAGE);
+        }
+        
     }//GEN-LAST:event_jToggleButtonGuardarActionPerformed
 
     private void jListProveedoresComponentHidden(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jListProveedoresComponentHidden
         // TODO add your handling code here:
     }//GEN-LAST:event_jListProveedoresComponentHidden
 
-    
+    private void jToggleButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonCancelarActionPerformed
+        jTextFieldDireccion.setText(" ");
+        jTextFieldNombre.setText(" ");
+        jTextFieldNota.setText(" ");
+        jTextFieldTelefono.setText(" ");
+    }//GEN-LAST:event_jToggleButtonCancelarActionPerformed
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabelDireccion;
     private javax.swing.JLabel jLabelFondoPantalla;
@@ -202,21 +214,20 @@ public class ProveedoresUI extends javax.swing.JFrame {
     private javax.swing.JToggleButton jToggleButtonGuardar;
     // End of variables declaration//GEN-END:variables
 
-     DefaultListModel supplierModel = new DefaultListModel();
+    DefaultListModel supplierModel = new DefaultListModel();
     SupplierDAO supplierDao = new SupplierDAO();
     List<Supplier> suppliers;
     List<String> suppliersDescription = new ArrayList<>();
-        
+    
     private void loadSuppliers() {
         jListProveedores.setModel(supplierModel);
         suppliers = supplierDao.getAllSupplierFromDB();
         
-         for(Supplier p :suppliers ){
-             suppliersDescription.add(p.getName());
-         }
-         
+        for (Supplier p : suppliers) {
+            suppliersDescription.add(p.getName());
+        }
+        
         supplierModel.addAll(suppliersDescription);
     }
-
-   
+    
 }

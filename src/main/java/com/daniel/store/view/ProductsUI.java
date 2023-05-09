@@ -5,11 +5,15 @@
 package com.daniel.store.view;
 
 import com.daniel.store.dao.ProductDAO;
+import com.daniel.store.dao.SupplierDAO;
 import com.daniel.store.entity.Product;
+import com.daniel.store.entity.Supplier;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
+
 /**
  *
  * @author carri
@@ -22,6 +26,7 @@ public class ProductsUI extends javax.swing.JFrame {
     public ProductsUI() {
         initComponents();
         loadProducts();
+        loadSupliers();
     }
 
     /**
@@ -62,7 +67,7 @@ public class ProductsUI extends javax.swing.JFrame {
 
         jButtonCancelar.setBackground(new java.awt.Color(255, 255, 255));
         jButtonCancelar.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
-        jButtonCancelar.setText("Cancelar");
+        jButtonCancelar.setText("Limpiar");
         jButtonCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonCancelarActionPerformed(evt);
@@ -193,7 +198,10 @@ public class ProductsUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarActionPerformed
-        // TODO add your handling code here:
+        jTextFieldMarca.setText(" ");
+        jTextFieldNombre.setText(" ");
+        jTextFieldNota.setText(" ");
+        jTextFieldPrecio.setText(" ");
     }//GEN-LAST:event_jButtonCancelarActionPerformed
 
     private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarActionPerformed
@@ -201,24 +209,24 @@ public class ProductsUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonEliminarActionPerformed
 
     private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
-       Product producto=new Product();
-        String name= this.jTextFieldNombre.getText();
+        Product producto = new Product();
+        String name = this.jTextFieldNombre.getText();
         producto.setName(name);
         String brand = this.jTextFieldMarca.getText();
         producto.setBrand(brand);
-        float precio =Float.parseFloat(this.jTextFieldPrecio.getText());
+        float precio = Float.parseFloat(this.jTextFieldPrecio.getText());
         producto.setPrice(precio);
-        String note =this.jTextFieldNota.getText();
+        String note = this.jTextFieldNota.getText();
         producto.setNotes(note);
         //TODO:¨Obtener del ComboBox
         producto.setSupplierId(1);
         System.out.println(producto);
         
         boolean saved = productDao.setProductToDB(producto);
-        if(saved){
+        if (saved) {
             JOptionPane.showMessageDialog(null, "Producto Guardado", "Productos", JOptionPane.INFORMATION_MESSAGE);
-        }else{
-            JOptionPane.showMessageDialog(null, "ERROR:¨Producto NO Guardado", "Productos " , JOptionPane.ERROR_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null, "ERROR:¨Producto NO Guardado", "Productos ", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButtonGuardarActionPerformed
 
@@ -242,7 +250,6 @@ public class ProductsUI extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldNotaActionPerformed
 
-   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonCancelar;
@@ -271,16 +278,30 @@ public class ProductsUI extends javax.swing.JFrame {
     ProductDAO productDao = new ProductDAO();
     List<Product> prodcuts;
     List<String> prodcutsDescription = new ArrayList<>();
-        
+    
     private void loadProducts() {
         jListProductos.setModel(productsModel);
         prodcuts = productDao.getAllProductsFromDB();
         
-         for(Product p : prodcuts){
-             prodcutsDescription.add(p.getName() + " - " + p.getPrice());
-         }
-         
+        for (Product p : prodcuts) {
+            prodcutsDescription.add(p.getName() + " - " + p.getPrice());
+        }
+        
         productsModel.addAll(prodcutsDescription);
     }
     
+    SupplierDAO supplierDao = new SupplierDAO();
+    List<Supplier> suppliers;
+    List<String> suppliersDescription = new ArrayList<>();
+    
+    private void loadSupliers() {
+        suppliers = supplierDao.getAllSupplierFromDB();
+        
+        for (Supplier p : suppliers) {
+            suppliersDescription.add(p.getName());
+        }
+        
+        jComboBox1.setModel(new DefaultComboBoxModel<>(suppliersDescription.toArray(String[]::new)));
+        
+    }
 }

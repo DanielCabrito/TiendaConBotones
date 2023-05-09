@@ -70,7 +70,7 @@ public class SaleProductsUI extends javax.swing.JFrame {
 
         jButtonRemover.setBackground(new java.awt.Color(255, 255, 255));
         jButtonRemover.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
-        jButtonRemover.setText("Remover");
+        jButtonRemover.setText("Limpiar");
         jButtonRemover.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonRemoverActionPerformed(evt);
@@ -181,7 +181,9 @@ public class SaleProductsUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRemoverActionPerformed
-        // TODO add your handling code here:
+       jTextFieldCantidad.setText(" ");
+    jTextFieldPrecioUnidad.setText(" ");
+    jTextFieldProductoID.setText(" ");
     }//GEN-LAST:event_jButtonRemoverActionPerformed
 
     private void jButtonPagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPagarActionPerformed
