@@ -9,6 +9,7 @@ import com.daniel.store.entity.Client;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultListModel;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 
 /**
@@ -52,6 +53,11 @@ public class DatosClienteUI extends javax.swing.JFrame {
         jButtonGuardar = new javax.swing.JButton();
         jButtonLimpiar = new javax.swing.JButton();
 
+        jListClientes.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                jListClientesValueChanged(evt);
+            }
+        });
         jScrollPane1.setViewportView(jListClientes);
 
         jLabelTitulo.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
@@ -260,6 +266,24 @@ public class DatosClienteUI extends javax.swing.JFrame {
      jTextTelefono.setText(" ");
     }//GEN-LAST:event_jButtonLimpiarActionPerformed
 
+    private void jListClientesValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jListClientesValueChanged
+         Client selectedClient = null;
+        if(!evt.getValueIsAdjusting()){
+            JList lsm = (javax.swing.JList)evt.getSource();
+            int index = lsm.getSelectedIndex();
+            selectedClient =   clients.get(index);
+            System.out.println(index + ": " + selectedClient);
+        }       
+        
+        if(selectedClient!=null){
+            this.jTextFieldNombre.setText(selectedClient.getName());
+            this.jTextDireccion.setText(selectedClient.getAddress());
+            this.jTextRFC.setText(selectedClient.getRfc());
+            this.jTextTelefono.setText(selectedClient.getPhoneNumber());
+            this.jTextCorreo.setText(selectedClient.getEmail());
+        }
+    }//GEN-LAST:event_jListClientesValueChanged
+
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -283,7 +307,7 @@ public class DatosClienteUI extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 DefaultListModel clientsModel = new DefaultListModel();
     ClientDAO clientDao = new ClientDAO();
-    List<Client> clients;
+    List<Client> clients = new ArrayList<>();
     List<String> clientsDescription = new ArrayList<>();
         
     private void loadClients() {

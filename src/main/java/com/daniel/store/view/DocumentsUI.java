@@ -18,6 +18,7 @@ import java.util.logging.Logger;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 
 /**
@@ -193,6 +194,11 @@ public class DocumentsUI extends javax.swing.JFrame {
         jLabelTitulo1.setText("DOCUMENTOS POR PAGAR");
         jPanel1.add(jLabelTitulo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 250, -1, -1));
 
+        jListDocumentosPorPagar.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                jListDocumentosPorPagarValueChanged(evt);
+            }
+        });
         jScrollPane2.setViewportView(jListDocumentosPorPagar);
 
         jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 280, 280, -1));
@@ -308,6 +314,29 @@ public class DocumentsUI extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBoxNameCompanyActionPerformed
 
+    private void jListDocumentosPorPagarValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jListDocumentosPorPagarValueChanged
+       
+         Document selectedDocument = null;
+        if(!evt.getValueIsAdjusting()){
+            JList lsm = (javax.swing.JList)evt.getSource();
+            int index = lsm.getSelectedIndex();
+            selectedDocument = documents.get(index);
+            System.out.println(index + ": " + selectedDocument);
+        }       
+        
+        if(selectedDocument!=null){
+            this.jTextField_ID.setText(String.valueOf(selectedDocument.getDocumentsId()));
+            this.jTextField_Lugar.setText(selectedDocument.getSite());
+            this.jTextField_Fecha.setText(String.valueOf(selectedDocument.getDate()));
+            this.jTextField_MontoAPagar.setText(String.valueOf(selectedDocument.getAmountPay()));
+            this.jTextField_FechaAPagar.setText(String.valueOf(selectedDocument.getDatePay()));
+            this.jTextField_DireccionEmpresa.setText(selectedDocument.getSiteCompany());
+
+            
+
+        }
+    }//GEN-LAST:event_jListDocumentosPorPagarValueChanged
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonGuardar;
@@ -337,7 +366,7 @@ public class DocumentsUI extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
  DefaultListModel documentsModel = new DefaultListModel();
     DocumentDAO documentDao = new DocumentDAO();
-    List<Document> documents;
+    List<Document> documents = new ArrayList<>();
     List<String> documentsDescription = new ArrayList<>();
 
     private void loadDocuments() {
@@ -345,7 +374,7 @@ public class DocumentsUI extends javax.swing.JFrame {
         documents = documentDao.getAllDocumentFromDB();
 
         for (Document p : documents) {
-            documentsDescription.add(p.getSupplierId() + " - " + p.getAmountPay());
+            documentsDescription.add(p.getSupplierId() + " - " + p.getSite() + " - " + p.getDate()+ " - "+ p.getAmountPay()+ " - "+ p.getDatePay()+ " - "+ p.getSiteCompany());
         }
 
         documentsModel.addAll(documentsDescription);

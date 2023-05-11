@@ -9,6 +9,10 @@ package com.daniel.store.entity;
  * @author carri
  */
 public class Client {
+
+    public static Client get(int index) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
     private int clientId;
     private String name;
     private String address;

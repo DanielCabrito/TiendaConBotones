@@ -9,6 +9,7 @@ import com.daniel.store.entity.Supplier;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultListModel;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 
 /**
@@ -139,6 +140,11 @@ public class ProveedoresUI extends javax.swing.JFrame {
                 jListProveedoresComponentHidden(evt);
             }
         });
+        jListProveedores.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                jListProveedoresValueChanged(evt);
+            }
+        });
         jScrollPane1.setViewportView(jListProveedores);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 190, 230, 320));
@@ -193,6 +199,25 @@ public class ProveedoresUI extends javax.swing.JFrame {
         jTextFieldTelefono.setText(" ");
     }//GEN-LAST:event_jToggleButtonCancelarActionPerformed
 
+    private void jListProveedoresValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jListProveedoresValueChanged
+       Supplier selectedSupplier = null;
+        if(!evt.getValueIsAdjusting()){
+            JList lsm = (javax.swing.JList)evt.getSource();
+            int index = lsm.getSelectedIndex();
+            selectedSupplier = suppliers.get(index);
+            System.out.println(index + ": " + selectedSupplier);
+        }       
+        
+        if(selectedSupplier!=null){
+            this.jTextFieldNombre.setText(selectedSupplier.getName());
+            this.jTextFieldTelefono.setText(selectedSupplier.getPhoneNumber());
+            this.jTextFieldDireccion.setText(selectedSupplier.getAdress());
+            this.jTextFieldNota.setText(selectedSupplier.getNote());
+            
+
+        }
+    }//GEN-LAST:event_jListProveedoresValueChanged
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabelDireccion;
@@ -216,7 +241,7 @@ public class ProveedoresUI extends javax.swing.JFrame {
 
     DefaultListModel supplierModel = new DefaultListModel();
     SupplierDAO supplierDao = new SupplierDAO();
-    List<Supplier> suppliers;
+    List<Supplier> suppliers = new ArrayList<>();
     List<String> suppliersDescription = new ArrayList<>();
     
     private void loadSuppliers() {
@@ -224,7 +249,7 @@ public class ProveedoresUI extends javax.swing.JFrame {
         suppliers = supplierDao.getAllSupplierFromDB();
         
         for (Supplier p : suppliers) {
-            suppliersDescription.add(p.getName());
+            suppliersDescription.add(p.getName() +" - "+ p.getPhoneNumber()+ " - "+ p.getAdress()+ " - "+ p.getNote());
         }
         
         supplierModel.addAll(suppliersDescription);

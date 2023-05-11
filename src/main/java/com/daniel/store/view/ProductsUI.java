@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 
 /**
@@ -166,6 +167,11 @@ public class ProductsUI extends javax.swing.JFrame {
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
+        jListProductos.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                jListProductosValueChanged(evt);
+            }
+        });
         jScrollPane2.setViewportView(jListProductos);
 
         jPanelProductos.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 160, 200, 330));
@@ -250,6 +256,26 @@ public class ProductsUI extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldNotaActionPerformed
 
+    private void jListProductosValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jListProductosValueChanged
+       
+         Product selectedProduct = null;
+        if(!evt.getValueIsAdjusting()){
+            JList lsm = (javax.swing.JList)evt.getSource();
+            int index = lsm.getSelectedIndex();
+            selectedProduct = prodcuts.get(index);
+            System.out.println(index + ": " + selectedProduct);
+        }       
+        
+        if(selectedProduct!=null){
+            this.jTextFieldNombre.setText(selectedProduct.getName());
+            this.jTextFieldMarca.setText(selectedProduct.getBrand());
+            this.jTextFieldPrecio.setText(String.valueOf(selectedProduct.getPrice()));
+            this.jTextFieldNota.setText(selectedProduct.getNotes());
+            
+
+        }
+    }//GEN-LAST:event_jListProductosValueChanged
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonCancelar;
@@ -276,7 +302,7 @@ public class ProductsUI extends javax.swing.JFrame {
 
     DefaultListModel productsModel = new DefaultListModel();
     ProductDAO productDao = new ProductDAO();
-    List<Product> prodcuts;
+    List<Product> prodcuts = new ArrayList<>();
     List<String> prodcutsDescription = new ArrayList<>();
     
     private void loadProducts() {
@@ -284,7 +310,7 @@ public class ProductsUI extends javax.swing.JFrame {
         prodcuts = productDao.getAllProductsFromDB();
         
         for (Product p : prodcuts) {
-            prodcutsDescription.add(p.getName() + " - " + p.getPrice());
+            prodcutsDescription.add(p.getName() +" - "+ p.getBrand()+ " - " + p.getPrice()+" - " + p.getNotes());
         }
         
         productsModel.addAll(prodcutsDescription);
