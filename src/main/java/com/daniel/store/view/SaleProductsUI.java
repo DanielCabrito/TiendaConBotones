@@ -7,12 +7,18 @@ package com.daniel.store.view;
 import com.daniel.store.dao.ProductDAO;
 import com.daniel.store.dao.SaleProductDAO;
 import com.daniel.store.entity.Product;
+import com.daniel.store.entity.Sale;
 import com.daniel.store.entity.SaleProduct;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultListModel;
+import javax.swing.JButton;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
+import javax.swing.ListModel;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -20,16 +26,115 @@ import javax.swing.JOptionPane;
  */
 public class SaleProductsUI extends javax.swing.JFrame {
 
+    private SaleProductDAO saleProductDao = new SaleProductDAO();
+    private ProductDAO productDAO = new ProductDAO();
+    private Sale currentSale;
+    private Product selectedProduct = null;
+   
+
+
     /**
-     * Creates new form VentasUI
+     * Al iniciar el UI hay que:
+     * 1. Cargar el UI (initComponents() )
+     * 2. Cargar Productos de la base de datos (tabla PRODUCTOS)
+     * 3. Inicir un objeto Sale que representa la venta
      */
     public SaleProductsUI() {
         initComponents();
-        //loadSales();
-        //loadSaleProducts();
         loadProducts();
+        currentSale = new Sale();
     }
+    
+    //Productos de la base de datos
+    private List<Product> products = new ArrayList<>();
+    //Descripciones para mostrar al usaurio en la lista de Productos
+    private List<String> prodcutsDescription = new ArrayList<>();
+    //Modelo usado para mostrar productos en la Lista
+    DefaultListModel productsDescriptionModel = new DefaultListModel();
+    boolean saleListLoaded = false;
+    
+    //Cargar los productos disponibles para vender
+    private void loadProducts() {
+        saleListLoaded = false;
+        productsDescriptionModel = new DefaultListModel();
+        products = new ArrayList<>();
+        prodcutsDescription = new ArrayList<>();
 
+        jListInventario.setModel(productsDescriptionModel);
+        products = productDAO.getAllAvailableProductsFromDB();
+
+        for (Product p : products) {
+            prodcutsDescription.add(p.getName() +" - "+ p.getBrand()+ " - " + p.getPrice()+" - " + p.getStock());
+        }
+
+        productsDescriptionModel.addAll(prodcutsDescription);
+        saleListLoaded = true;
+    }  
+   
+    
+    //Productos del carrito
+    private List<SaleProduct> shoppingCar = new ArrayList<>();
+    //Descripciones para mostrar al usaurio en el carrito de compras
+    private List<String> shoppingCarDescription = new ArrayList<>();
+    //Modelo usado para mostrar productos en el carrito
+    DefaultListModel shoppingCarDescriptionModel = new DefaultListModel();
+    private void addToShoppingCar(){
+        //1. Armar la descirpcion que se va a mostrar en el carrito
+        String amount= this.jTextFieldCantidad.getText();
+        if (amount == null || amount.isBlank() || amount.trim().length() < 1 || amount.trim().length() > 45) {
+            JOptionPane.showMessageDialog(null, "ERROR: Cantidad", "Ventas", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        String subtotal = this.jTextFieldPSubtotal.getText();
+        String description = selectedProduct.getName() + " - " + amount + " - " + subtotal;
+        
+        //2. Guardar el producto seleccionado en el carrito 
+        SaleProduct product = new SaleProduct();
+        product.setProductId(selectedProduct.getProductId());
+       
+        product.setAmount(Integer.parseInt(amount));
+        product.setUnitPrice((float) selectedProduct.getPrice());
+        shoppingCar.add(product);
+        this.jListCarrito.setModel(shoppingCarDescriptionModel);
+        shoppingCarDescriptionModel.addElement(description);
+        
+        
+         if (!subtotal.isEmpty()) {
+        currentSale.setTotal(currentSale.getTotal() + Float.parseFloat(subtotal));
+}
+        this.jTextFieldTotal.setText( String.valueOf(currentSale.getTotal()));
+        
+        //3. Limpiar el formularoio
+        this.cleanForm();
+        selectedProduct = null;
+        
+        
+    }
+    
+    private void calculateTotal(){
+        try{
+            //Cantidad ingressda
+            int cantidad = Integer.parseInt( this.jTextFieldCantidad.getText() );
+            //Buscar en el carrito si ya se agregaron productos del mismo
+            for(SaleProduct p : this.shoppingCar){
+                if(p.getProductId() == selectedProduct.getProductId()){
+                    cantidad = cantidad + p.getAmount();
+                    break;
+                }
+            }
+            
+            if(cantidad > selectedProduct.getStock()){
+                JOptionPane.showMessageDialog(null, "ERROR: Inventario insuficiente", "Ventas", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            double subtotal = cantidad * selectedProduct.getPrice();
+            this.jTextFieldPSubtotal.setText(String.valueOf(subtotal));
+        }catch(Exception ex){
+            this.jTextFieldCantidad.setText("");
+            this.jTextFieldPSubtotal.setText("");
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -40,8 +145,6 @@ public class SaleProductsUI extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel = new javax.swing.JPanel();
-        jButtonAgregar = new javax.swing.JButton();
-        jButtonRemover = new javax.swing.JButton();
         jButtonPagar = new javax.swing.JButton();
         jLabelTitulo = new javax.swing.JLabel();
         jLabelProductoID = new javax.swing.JLabel();
@@ -60,39 +163,22 @@ public class SaleProductsUI extends javax.swing.JFrame {
         jListInventario = new javax.swing.JList<>();
         jScrollPane3 = new javax.swing.JScrollPane();
         jListCarrito = new javax.swing.JList<>();
+        jButtonEliminar = new javax.swing.JButton();
+        jButtonAgregarCarrito = new javax.swing.JButton();
         jLabelFondoPantalla = new javax.swing.JLabel();
 
         jPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jButtonAgregar.setBackground(new java.awt.Color(255, 255, 255));
-        jButtonAgregar.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
-        jButtonAgregar.setText("Agregar");
-        jButtonAgregar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonAgregarActionPerformed(evt);
-            }
-        });
-        jPanel.add(jButtonAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 520, 160, 50));
-
-        jButtonRemover.setBackground(new java.awt.Color(255, 255, 255));
-        jButtonRemover.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
-        jButtonRemover.setText("Limpiar");
-        jButtonRemover.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonRemoverActionPerformed(evt);
-            }
-        });
-        jPanel.add(jButtonRemover, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 520, 160, 50));
-
         jButtonPagar.setBackground(new java.awt.Color(255, 255, 255));
         jButtonPagar.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
+        jButtonPagar.setForeground(new java.awt.Color(51, 255, 51));
         jButtonPagar.setText("Pagar");
         jButtonPagar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonPagarActionPerformed(evt);
             }
         });
-        jPanel.add(jButtonPagar, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 520, 160, 50));
+        jPanel.add(jButtonPagar, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 480, 160, 50));
 
         jLabelTitulo.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
         jLabelTitulo.setForeground(new java.awt.Color(102, 102, 102));
@@ -117,12 +203,12 @@ public class SaleProductsUI extends javax.swing.JFrame {
         jLabelTituloTablaInventario.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
         jLabelTituloTablaInventario.setForeground(new java.awt.Color(102, 102, 102));
         jLabelTituloTablaInventario.setText("INVENTARIO");
-        jPanel.add(jLabelTituloTablaInventario, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 110, 160, -1));
+        jPanel.add(jLabelTituloTablaInventario, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, 160, -1));
 
         jLabelTituloTablaCarrito.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
         jLabelTituloTablaCarrito.setForeground(new java.awt.Color(102, 102, 102));
         jLabelTituloTablaCarrito.setText("CARRITO");
-        jPanel.add(jLabelTituloTablaCarrito, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 100, 160, -1));
+        jPanel.add(jLabelTituloTablaCarrito, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 100, 160, -1));
 
         jTextFieldPrice.setEditable(false);
         jTextFieldPrice.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
@@ -164,6 +250,11 @@ public class SaleProductsUI extends javax.swing.JFrame {
 
         jTextFieldCantidad.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
         jTextFieldCantidad.setForeground(new java.awt.Color(102, 102, 102));
+        jTextFieldCantidad.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextFieldCantidadFocusLost(evt);
+            }
+        });
         jTextFieldCantidad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextFieldCantidadActionPerformed(evt);
@@ -199,7 +290,7 @@ public class SaleProductsUI extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(jListInventario);
 
-        jPanel.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, 200, 330));
+        jPanel.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, 200, 330));
 
         jListCarrito.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { " " };
@@ -208,7 +299,29 @@ public class SaleProductsUI extends javax.swing.JFrame {
         });
         jScrollPane3.setViewportView(jListCarrito);
 
-        jPanel.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 140, 200, 330));
+        jPanel.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 130, 200, 330));
+
+        jButtonEliminar.setBackground(new java.awt.Color(255, 255, 255));
+        jButtonEliminar.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
+        jButtonEliminar.setForeground(new java.awt.Color(255, 51, 51));
+        jButtonEliminar.setText("Eliminar");
+        jButtonEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEliminarActionPerformed(evt);
+            }
+        });
+        jPanel.add(jButtonEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 480, 160, 50));
+
+        jButtonAgregarCarrito.setBackground(new java.awt.Color(255, 255, 255));
+        jButtonAgregarCarrito.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
+        jButtonAgregarCarrito.setForeground(new java.awt.Color(0, 153, 255));
+        jButtonAgregarCarrito.setText("Agregar");
+        jButtonAgregarCarrito.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAgregarCarritoActionPerformed(evt);
+            }
+        });
+        jPanel.add(jButtonAgregarCarrito, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 480, 170, 50));
 
         jLabelFondoPantalla.setIcon(new javax.swing.ImageIcon("C:\\Users\\carri\\Downloads\\INTERFAZ\\21423.png")); // NOI18N
         jPanel.add(jLabelFondoPantalla, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1117, 666));
@@ -221,17 +334,11 @@ public class SaleProductsUI extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 551, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jButtonRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRemoverActionPerformed
-       jTextFieldCantidad.setText(" ");
-    jTextFieldPSubtotal.setText(" ");
-    jTextFieldProductName.setText(" ");
-    }//GEN-LAST:event_jButtonRemoverActionPerformed
 
     private void jButtonPagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPagarActionPerformed
         SeleccionDeTicketFacturaUI seleccionUI = new SeleccionDeTicketFacturaUI ();
@@ -241,30 +348,16 @@ public class SaleProductsUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonPagarActionPerformed
 
     //Guardar ID de la venta actual.
-    Integer saleId = null;
+    private void cleanForm (){
+    jTextFieldCantidad.setText(" ");
+    jTextFieldPSubtotal.setText(" ");
+    jTextFieldPrice.setText(" ");
+    jTextFieldProductName.setText(" "); 
+    Integer saleId = null; 
+        
+    }
     
-    private void jButtonAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAgregarActionPerformed
-        
-        SaleProduct saleProductUi=new SaleProduct();
-        int productId= Integer.parseInt (this.jTextFieldProductName.getText());
-        saleProductUi.setProductId(productId);
-        int cantidad= Integer.parseInt(this.jTextFieldCantidad.getText());
-        saleProductUi.setAmount(cantidad);
-        float precioUnidad= Float.parseFloat(this.jTextFieldPSubtotal.getText());
-        saleProductUi.setUnitPrice(precioUnidad);
-        saleProductUi.setSaleProductId(1);
-        saleProductUi.setSaleId(1);
-        System.out.println(saleProductUi);
-        
-        boolean saved=  saleProductDao.setSaleProductToDB(saleProductUi);
-        if(saved){
-            JOptionPane.showMessageDialog(null, "Venta Guardada", "Ventas", JOptionPane.INFORMATION_MESSAGE);
-        }else{
-            JOptionPane.showMessageDialog(null, "ERROR: Venta No Guardada", "Ventas", JOptionPane.ERROR_MESSAGE);
-        }
-        
-    }//GEN-LAST:event_jButtonAgregarActionPerformed
-
+    
     private void jTextFieldProductNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldProductNameActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldProductNameActionPerformed
@@ -286,8 +379,6 @@ public class SaleProductsUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextFieldTotalActionPerformed
 
     private void jListInventarioValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jListInventarioValueChanged
-        // TODO add your handling code here:
-        Product selectedProduct = null;
         if(!evt.getValueIsAdjusting()){
             JList lsm = (javax.swing.JList)evt.getSource();
             int index = lsm.getSelectedIndex();
@@ -298,16 +389,47 @@ public class SaleProductsUI extends javax.swing.JFrame {
         if(selectedProduct!=null){
             this.jTextFieldProductName.setText(selectedProduct.getName());
             this.jTextFieldPrice.setText(String.valueOf(selectedProduct.getPrice()));
-
+            this.jTextFieldCantidad.setText("");
+            this.jTextFieldPSubtotal.setText("");
         }
     }//GEN-LAST:event_jListInventarioValueChanged
+
+    private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarActionPerformed
+DefaultTableModel tableModel = new DefaultTableModel();
+
+ 
+        jButtonEliminar.addActionListener(new ActionListener() {
+    public void actionPerformed(ActionEvent e) {
+        DefaultTableModel model = (DefaultTableModel) jListCarrito.getModel();
+        int selectedRow = jListCarrito.getSelectedIndex();
+        if (selectedRow != -1) { // Se ha seleccionado una fila
+            model.removeRow(selectedRow); // Elimina la fila seleccionada del modelo de la tabla
+        }
+    }
+});
+
+
+
+    }//GEN-LAST:event_jButtonEliminarActionPerformed
+           
+      
+     
+    private void jButtonAgregarCarritoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAgregarCarritoActionPerformed
+        if(selectedProduct != null){
+            addToShoppingCar();
+        }       
+    }//GEN-LAST:event_jButtonAgregarCarritoActionPerformed
+
+    private void jTextFieldCantidadFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldCantidadFocusLost
+        calculateTotal();
+    }//GEN-LAST:event_jTextFieldCantidadFocusLost
 
    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButtonAgregar;
+    private javax.swing.JButton jButtonAgregarCarrito;
+    private javax.swing.JButton jButtonEliminar;
     private javax.swing.JButton jButtonPagar;
-    private javax.swing.JButton jButtonRemover;
     private javax.swing.JLabel jLabelCantidad;
     private javax.swing.JLabel jLabelFondoPantalla;
     private javax.swing.JLabel jLabelPrecioUnidad;
@@ -329,57 +451,5 @@ public class SaleProductsUI extends javax.swing.JFrame {
     private javax.swing.JTextField jTextFieldTotal;
     // End of variables declaration//GEN-END:variables
  
-    
-    DefaultListModel productsModel = new DefaultListModel();
-    ProductDAO productDAO = new ProductDAO();
-    
-    //Productos de la base de datos
-    List<Product> products = new ArrayList<>();
-    //Dexriociones para mostrar al usaurio en la lista
-    List<String> prodcutsDescription = new ArrayList<>();
-    
-    //Cargar los productos disponibles para vender
-    private void loadProducts() {
-        jListInventario.setModel(productsModel);
-        products = productDAO.getAllAvailableProductsFromDB();
-        
-        for(Product p : products){
-            prodcutsDescription.add( p.getName()+ " - Inventario " + p.getStock()+ " - Precio " + p.getPrice());
-        }
-        productsModel.addAll(prodcutsDescription);
-    }
-    
-    /*private void registerEventListener(){
-        ListSelectionModel listSelectionModel = jListInventario.getSelectionModel();
-        listSelectionModel.addListSelectionListener(
-                            new SharedListSelectionHandler())
-            }*/
-        
-    private void loadSales() {
-        jListInventario.setModel(productsModel);
-        products = productDAO.getAllProductsFromDB();
-        
-         for(Product p : products){
-             prodcutsDescription.add("ID producto " +p.getProductId() + "-" + p.getName()+ " -Inventario " + p.getStock()+ " -Precio " + p.getPrice());
-         }
-         
-        productsModel.addAll(prodcutsDescription);
-    }
-    
-    DefaultListModel salesproductsModel = new DefaultListModel();
-    SaleProductDAO saleProductDao = new SaleProductDAO();
-    List<SaleProduct> saleProducts;
-    List<String> salesProductsDescription = new ArrayList<>();
-        
-    private void loadSaleProducts() {
-        jListCarrito.setModel(salesproductsModel);
-        saleProducts = saleProductDao.getAllSaleProductFromDB();
-        
-         for(SaleProduct a : saleProducts){
-             salesProductsDescription.add( " ID Producto " + a.getProductId() + " -Cantidad " + a.getAmount() + " -$ " + a.getUnitPrice());
-         }
-         
-        salesproductsModel.addAll(salesProductsDescription);
-    }
-    
+
 }

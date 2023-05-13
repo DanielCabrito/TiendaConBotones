@@ -48,7 +48,32 @@ public class ClientDAO {
         return clientList;
     }
     
-     public boolean setClientToDB(Client client) {
+    public List<Client> getAllAvailableClientsFromDB() { 
+        List<Client> clientList = new ArrayList<>();
+        //Conectarse a BD
+        String sql = "SELECT * FROM tiendacabrito.CLIENTES WHERE CLIENTE_ID>0";
+        try (Connection con = DriverManager.getConnection(
+                myConnectionURL,
+                user, pwd); PreparedStatement ps = con.prepareStatement(sql)) {
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Client p = new Client();
+                    p.setClientId(rs.getInt("CLIENTE_ID"));
+                    p.setName(rs.getString("NOMBRE"));
+                    p.setAddress(rs.getString("DIRECCION"));
+                    p.setRfc(rs.getString("RFC"));
+                    p.setPhoneNumber(rs.getString("TELEFONO"));
+                    p.setEmail(rs.getString("CORREO"));
+                    clientList.add(p);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        return clientList;
+    }
+     public boolean saveNewProductToDB(Client client) {
         String sql = "INSERT INTO tiendacabrito.CLIENTES (NOMBRE, DIRECCION, RFC, TELEFONO, CORREO) "
                 + "VALUES (?,?,?,?,?)";
         try (Connection con = DriverManager.getConnection( myConnectionURL, user, pwd);
@@ -59,6 +84,40 @@ public class ClientDAO {
             ps.setString(3, client.getRfc());
             ps.setString(4, client.getPhoneNumber());
             ps.setString(5, client.getEmail());
+           
+            return ps.executeUpdate()>0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+     
+      public boolean updateExistingClientToDB(int clientId, Client client) {
+        String sql = "UPDATE tiendacabrito.CLIENTES SET NOMBRE=?, DIRECCION=?, RFC=?, TELEFONO=?, CORREO=? "
+        + "WHERE CLIENTE_ID = ?";
+        try (Connection con = DriverManager.getConnection( myConnectionURL, user, pwd);
+                PreparedStatement ps = con.prepareStatement(sql)) {
+            
+            ps.setString(1, client.getName());
+            ps.setString(2, client.getAddress());
+            ps.setString(3, client.getRfc());
+            ps.setString(4, client.getPhoneNumber());
+            ps.setString(5, client.getEmail());
+            ps.setInt(6, clientId);
+           
+            return ps.executeUpdate()>0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+      
+      public boolean deleteClientFromDB(int clientId) {
+        
+        String sql = "DELETE FROM tiendacabrito.CLIENTES WHERE CLIENTE_ID = ?";
+        try (Connection con = DriverManager.getConnection( myConnectionURL, user, pwd);
+                PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, clientId);
            
             return ps.executeUpdate()>0;
         } catch (SQLException e) {

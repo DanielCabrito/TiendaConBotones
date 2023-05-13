@@ -71,9 +71,9 @@ public class ProductDAO {
     }
 
      
-    public boolean setProductToDB(Product producto) {
-        String sql = "INSERT INTO tiendacabrito.PRODUCTOS (NOMBRE, MARCA, PRECIO, PROVEEDOR_ID, NOTAS) "
-                + "VALUES (?,?,?,?,?)";
+    public boolean saveNewProductToDB(Product producto) {
+        String sql = "INSERT INTO tiendacabrito.PRODUCTOS (NOMBRE, MARCA, PRECIO, PROVEEDOR_ID, NOTAS, INVENTARIO) "
+                + "VALUES (?,?,?,?,?,?)";
         try (Connection con = DriverManager.getConnection( myConnectionURL, user, pwd);
                 PreparedStatement ps = con.prepareStatement(sql)) {
             
@@ -82,6 +82,42 @@ public class ProductDAO {
             ps.setDouble(3, producto.getPrice());
             ps.setInt(4, producto.getSupplierId());
             ps.setString(5, producto.getNotes());
+            ps.setInt(6, producto.getStock());
+           
+            return ps.executeUpdate()>0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean updateExistingProductToDB(int productId, Product producto) {
+        String sql = "UPDATE tiendacabrito.PRODUCTOS SET NOMBRE=?, MARCA=?, PRECIO=?, PROVEEDOR_ID=?, NOTAS=?, INVENTARIO=? "
+        + "WHERE PRODUCTO_ID = ?";
+        try (Connection con = DriverManager.getConnection( myConnectionURL, user, pwd);
+                PreparedStatement ps = con.prepareStatement(sql)) {
+            
+            ps.setString(1, producto.getName());
+            ps.setString(2, producto.getBrand());
+            ps.setDouble(3, producto.getPrice());
+            ps.setInt(4, producto.getSupplierId());
+            ps.setString(5, producto.getNotes());
+            ps.setInt(6, producto.getStock());
+            ps.setInt(7, productId);
+           
+            return ps.executeUpdate()>0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean deleteProductFromDB(int productId) {
+        
+        String sql = "DELETE FROM tiendacabrito.PRODUCTOS WHERE PRODUCTO_ID = ?";
+        try (Connection con = DriverManager.getConnection( myConnectionURL, user, pwd);
+                PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, productId);
            
             return ps.executeUpdate()>0;
         } catch (SQLException e) {

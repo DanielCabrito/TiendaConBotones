@@ -163,29 +163,73 @@ public class ProveedoresUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jToggleButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonEliminarActionPerformed
-        // TODO add your handling code here:
+       if(selectedSupplier!=null){
+            //2. El usuario no ha seleccionado ningun producto de la lista. Guardar nuevo producto.
+            boolean deleted = supplierDao.deleteSupplierFromDB(selectedSupplier.getSupplierId());
+            if (deleted) {
+                JOptionPane.showMessageDialog(null, "Producto Eliminado", "Productos", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null, "ERROR: Producto NO Eliminado", "Productos ", JOptionPane.ERROR_MESSAGE);
+            }
+            this.loadSuppliers();
+        }
+        clenaForm();                
+        
     }//GEN-LAST:event_jToggleButtonEliminarActionPerformed
 
     private void jToggleButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonGuardarActionPerformed
         Supplier supplierUi = new Supplier();
+        
         String name = this.jTextFieldNombre.getText();
+        if (name == null || name.isBlank() || name.trim().length() < 2 || name.trim().length() > 45) {
+            JOptionPane.showMessageDialog(null, "ERROR: Nombre ", "Proveedores", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         supplierUi.setName(name);
+        //
         String phoneNumber = this.jTextFieldTelefono.getText();
+        if (phoneNumber == null || phoneNumber.isBlank() || phoneNumber.trim().length() < 2 || phoneNumber.trim().length() > 45) {
+            JOptionPane.showMessageDialog(null, "ERROR: Telefono ", "Proveedores", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         supplierUi.setPhoneNumber(phoneNumber);
+        //
         String adress = this.jTextFieldDireccion.getText();
+         if (adress == null || adress.isBlank() || adress.trim().length() < 2 || adress.trim().length() > 45) {
+            JOptionPane.showMessageDialog(null, "ERROR: Direccion ", "Proveedores", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         supplierUi.setAdress(adress);
+        //
         String note = this.jTextFieldNota.getText();
+         if (note == null || note.isBlank() || note.trim().length() < 2 || note.trim().length() > 45) {
+            JOptionPane.showMessageDialog(null, "ERROR: Nota ", "Proveedores", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         supplierUi.setNote(note);
+        //
         supplierUi.setSupplierId(1);
         System.out.println(supplierUi);
         
-        boolean saved = supplierDao.setProductToDB(supplierUi);
+        if(selectedSupplier==null){
+            boolean saved = supplierDao.saveNewProductToDB(supplierUi);
         if (saved) {
-            JOptionPane.showMessageDialog(null, "Proveedor agregado", "Proveedores", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Proveedor Guardado", "Proveedores", JOptionPane.INFORMATION_MESSAGE);
         } else {
-            JOptionPane.showMessageDialog(null, "ERROR: Proveedor no guaradado", "Proveedores", JOptionPane.ERROR_MESSAGE);
-        }
+            JOptionPane.showMessageDialog(null, "ERROR: Proveedor no guaradado", "Proveedores", JOptionPane.ERROR_MESSAGE);   
         
+        }
+        }else{
+             boolean saved = supplierDao.updateExistingSupplierToDB(selectedSupplier.getSupplierId(), supplierUi);
+            if (saved) {
+                JOptionPane.showMessageDialog(null, "Proveedor Actualizado", "Proveedor", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null, "ERROR:¨Proveedor NO Actualizado", "Proveedor ", JOptionPane.ERROR_MESSAGE);
+            }   
+                }
+        
+        loadSuppliers();
+        clenaForm();
     }//GEN-LAST:event_jToggleButtonGuardarActionPerformed
 
     private void jListProveedoresComponentHidden(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jListProveedoresComponentHidden
@@ -193,15 +237,12 @@ public class ProveedoresUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jListProveedoresComponentHidden
 
     private void jToggleButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonCancelarActionPerformed
-        jTextFieldDireccion.setText(" ");
-        jTextFieldNombre.setText(" ");
-        jTextFieldNota.setText(" ");
-        jTextFieldTelefono.setText(" ");
+       clenaForm();
     }//GEN-LAST:event_jToggleButtonCancelarActionPerformed
-
+Supplier selectedSupplier = null;
     private void jListProveedoresValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jListProveedoresValueChanged
-       Supplier selectedSupplier = null;
-        if(!evt.getValueIsAdjusting()){
+       
+        if(!evt.getValueIsAdjusting()&& supplierListLoaded){
             JList lsm = (javax.swing.JList)evt.getSource();
             int index = lsm.getSelectedIndex();
             selectedSupplier = suppliers.get(index);
@@ -243,8 +284,15 @@ public class ProveedoresUI extends javax.swing.JFrame {
     SupplierDAO supplierDao = new SupplierDAO();
     List<Supplier> suppliers = new ArrayList<>();
     List<String> suppliersDescription = new ArrayList<>();
+    boolean supplierListLoaded = false;
     
     private void loadSuppliers() {
+        supplierListLoaded = false;
+        supplierModel = new DefaultListModel();
+        suppliers = new ArrayList<>();
+        suppliersDescription = new ArrayList<>();
+        
+        
         jListProveedores.setModel(supplierModel);
         suppliers = supplierDao.getAllSupplierFromDB();
         
@@ -253,6 +301,15 @@ public class ProveedoresUI extends javax.swing.JFrame {
         }
         
         supplierModel.addAll(suppliersDescription);
+        supplierListLoaded = true;
     }
+       private void clenaForm(){
+        jTextFieldDireccion.setText(" ");
+        jTextFieldNombre.setText(" ");
+        jTextFieldNota.setText(" ");
+        jTextFieldTelefono.setText(" ");
+        this.selectedSupplier =  null;
+}
+    
     
 }

@@ -48,16 +48,19 @@ public class ProductsUI extends javax.swing.JFrame {
         jLabelTitulo = new javax.swing.JLabel();
         jLabelNombre = new javax.swing.JLabel();
         jLabelMarca = new javax.swing.JLabel();
+        jLabelProveedor = new javax.swing.JLabel();
         jLabelPrecio = new javax.swing.JLabel();
-        jLabelNota = new javax.swing.JLabel();
+        jLabelInventario = new javax.swing.JLabel();
         jTextFieldNombre = new javax.swing.JTextField();
         jTextFieldMarca = new javax.swing.JTextField();
         jTextFieldPrecio = new javax.swing.JTextField();
-        jTextFieldNota = new javax.swing.JTextField();
+        jTextFieldInventario = new javax.swing.JTextField();
         jLabelTituloTabla = new javax.swing.JLabel();
+        jComboBox1 = new javax.swing.JComboBox<>();
         jScrollPane2 = new javax.swing.JScrollPane();
         jListProductos = new javax.swing.JList<>();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        jLabelNota = new javax.swing.JLabel();
+        jTextFieldNota = new javax.swing.JTextField();
         jLabelFondo = new javax.swing.JLabel();
 
         jTextArea1.setColumns(20);
@@ -111,15 +114,20 @@ public class ProductsUI extends javax.swing.JFrame {
         jLabelMarca.setText("Marca:");
         jPanelProductos.add(jLabelMarca, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 190, -1, -1));
 
+        jLabelProveedor.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
+        jLabelProveedor.setForeground(new java.awt.Color(102, 102, 102));
+        jLabelProveedor.setText("Proveedor:");
+        jPanelProductos.add(jLabelProveedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 460, -1, -1));
+
         jLabelPrecio.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
         jLabelPrecio.setForeground(new java.awt.Color(102, 102, 102));
-        jLabelPrecio.setText("Nota:");
-        jPanelProductos.add(jLabelPrecio, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 330, -1, -1));
+        jLabelPrecio.setText("Precio:");
+        jPanelProductos.add(jLabelPrecio, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 260, -1, -1));
 
-        jLabelNota.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
-        jLabelNota.setForeground(new java.awt.Color(102, 102, 102));
-        jLabelNota.setText("Precio:");
-        jPanelProductos.add(jLabelNota, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 260, -1, -1));
+        jLabelInventario.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
+        jLabelInventario.setForeground(new java.awt.Color(102, 102, 102));
+        jLabelInventario.setText("Inventario:");
+        jPanelProductos.add(jLabelInventario, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 330, -1, -1));
 
         jTextFieldNombre.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
         jTextFieldNombre.setForeground(new java.awt.Color(102, 102, 102));
@@ -148,19 +156,27 @@ public class ProductsUI extends javax.swing.JFrame {
         });
         jPanelProductos.add(jTextFieldPrecio, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 250, 470, -1));
 
-        jTextFieldNota.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
-        jTextFieldNota.setForeground(new java.awt.Color(102, 102, 102));
-        jTextFieldNota.addActionListener(new java.awt.event.ActionListener() {
+        jTextFieldInventario.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
+        jTextFieldInventario.setForeground(new java.awt.Color(102, 102, 102));
+        jTextFieldInventario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldNotaActionPerformed(evt);
+                jTextFieldInventarioActionPerformed(evt);
             }
         });
-        jPanelProductos.add(jTextFieldNota, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 320, 470, -1));
+        jPanelProductos.add(jTextFieldInventario, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 320, 470, -1));
 
         jLabelTituloTabla.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
         jLabelTituloTabla.setForeground(new java.awt.Color(102, 102, 102));
         jLabelTituloTabla.setText("PRODUCTOS");
         jPanelProductos.add(jLabelTituloTabla, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 110, 160, -1));
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
+        jPanelProductos.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 460, 370, -1));
 
         jListProductos.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { " " };
@@ -176,8 +192,19 @@ public class ProductsUI extends javax.swing.JFrame {
 
         jPanelProductos.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 160, 200, 330));
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jPanelProductos.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 410, 400, -1));
+        jLabelNota.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
+        jLabelNota.setForeground(new java.awt.Color(102, 102, 102));
+        jLabelNota.setText("Nota:");
+        jPanelProductos.add(jLabelNota, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 400, -1, -1));
+
+        jTextFieldNota.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
+        jTextFieldNota.setForeground(new java.awt.Color(102, 102, 102));
+        jTextFieldNota.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldNotaActionPerformed(evt);
+            }
+        });
+        jPanelProductos.add(jTextFieldNota, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 390, 470, -1));
 
         jLabelFondo.setIcon(new javax.swing.ImageIcon("C:\\Users\\carri\\Downloads\\INTERFAZ\\21423.png")); // NOI18N
         jLabelFondo.addHierarchyBoundsListener(new java.awt.event.HierarchyBoundsListener() {
@@ -204,36 +231,100 @@ public class ProductsUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarActionPerformed
-        jTextFieldMarca.setText(" ");
-        jTextFieldNombre.setText(" ");
-        jTextFieldNota.setText(" ");
-        jTextFieldPrecio.setText(" ");
+        cleanForm();
     }//GEN-LAST:event_jButtonCancelarActionPerformed
 
     private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarActionPerformed
-        // TODO add your handling code here:
+        //1. Determinar si estamos eliminando un producto existent
+        if (selectedProduct != null) {
+            //2. El usuario no ha seleccionado ningun producto de la lista. Guardar nuevo producto.
+            boolean deleted = productDao.deleteProductFromDB(selectedProduct.getProductId());
+            if (deleted) {
+                JOptionPane.showMessageDialog(null, "Producto Eliminado", "Productos", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null, "ERROR: Producto NO Eliminado", "Productos ", JOptionPane.ERROR_MESSAGE);
+            }
+            this.loadProducts();
+        }
+        cleanForm();
     }//GEN-LAST:event_jButtonEliminarActionPerformed
 
     private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
-        Product producto = new Product();
+        //1. Recolectar informacion del producto de la UI
+        Product productUI = new Product();
         String name = this.jTextFieldNombre.getText();
-        producto.setName(name);
-        String brand = this.jTextFieldMarca.getText();
-        producto.setBrand(brand);
-        float precio = Float.parseFloat(this.jTextFieldPrecio.getText());
-        producto.setPrice(precio);
-        String note = this.jTextFieldNota.getText();
-        producto.setNotes(note);
-        //TODO:¨Obtener del ComboBox
-        producto.setSupplierId(1);
-        System.out.println(producto);
-        
-        boolean saved = productDao.setProductToDB(producto);
-        if (saved) {
-            JOptionPane.showMessageDialog(null, "Producto Guardado", "Productos", JOptionPane.INFORMATION_MESSAGE);
-        } else {
-            JOptionPane.showMessageDialog(null, "ERROR:¨Producto NO Guardado", "Productos ", JOptionPane.ERROR_MESSAGE);
+        if (name == null || name.isBlank() || name.trim().length() < 2 || name.trim().length() > 45) {
+            JOptionPane.showMessageDialog(null, "ERROR: Nombre de Producto invalido", "Productos", JOptionPane.ERROR_MESSAGE);
+            return;
         }
+        productUI.setName(name);
+        //
+        String brand = this.jTextFieldMarca.getText();
+        if (brand == null || brand.isBlank() || brand.trim().length() < 2 || brand.trim().length() > 45) {
+            JOptionPane.showMessageDialog(null, "ERROR: Marca de Producto invalido", "Productos", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        productUI.setBrand(brand);
+        //
+        float precio;
+        try {
+            precio = Float.parseFloat(this.jTextFieldPrecio.getText());
+            if (precio < 0) {
+                throw new IllegalArgumentException("El precio no puede ser negativo.");
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "ERROR: Precio de producto inválido.", "Productos", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        productUI.setPrice(precio);
+        //
+        int stockUi;
+        try {
+            stockUi = Integer.parseInt(this.jTextFieldInventario.getText());
+            if (stockUi < 0) {
+                throw new IllegalArgumentException("El stock no puede ser negativo.");
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "ERROR: Inventario de producto inválido.", "Productos", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        productUI.setStock(stockUi);
+        //
+        String note = this.jTextFieldNota.getText();
+        if (note == null || note.isBlank() || note.trim().length() < 2 || note.trim().length() > 45) {
+            JOptionPane.showMessageDialog(null, "ERROR: Nombre de Producto invalido", "Productos", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        productUI.setNotes(note);
+        //
+        int suplierIndex = this.jComboBox1.getSelectedIndex();
+        Supplier suplier = suppliers.get(suplierIndex);
+        productUI.setSupplierId(suplier.getSupplierId()); //TODO: Obtener proveedor del ComboBox
+
+        System.out.println(productUI);
+
+        //2. Determinar si estamos modificando un producto existent o vamos a crear uno nuevo
+        if (selectedProduct == null) {
+            //3. El usuario no ha seleccionado ningun producto de la lista. Guardar nuevo producto.
+            boolean saved = productDao.saveNewProductToDB(productUI);
+            if (saved) {
+                JOptionPane.showMessageDialog(null, "Producto Guardado", "Productos", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null, "ERROR:¨Producto NO Guardado", "Productos ", JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+            //3. El usuario ha seleccionado un producto de la lista. Guardar cambios en el producto existente.
+            boolean saved = productDao.updateExistingProductToDB(selectedProduct.getProductId(), productUI);
+            if (saved) {
+                JOptionPane.showMessageDialog(null, "Producto Actualizado", "Productos", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null, "ERROR:¨Producto NO Actualizado", "Productos ", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+
+        //4. Recargar Lista
+        loadProducts();
+        cleanForm();
     }//GEN-LAST:event_jButtonGuardarActionPerformed
 
     private void jLabelFondoAncestorMoved(java.awt.event.HierarchyEvent evt) {//GEN-FIRST:event_jLabelFondoAncestorMoved
@@ -252,29 +343,39 @@ public class ProductsUI extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldNombreActionPerformed
 
+    private void jTextFieldInventarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldInventarioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldInventarioActionPerformed
+
+    Product selectedProduct = null;
+
+    //Evento cuando se hace click en un elmento de la lista
+    private void jListProductosValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jListProductosValueChanged
+        if (!evt.getValueIsAdjusting() && productListLoaded) {
+            //El evento se dispara dos veces. Usamos este IF para reaccionar solo a uno de los eventos.
+            JList lsm = (javax.swing.JList) evt.getSource();
+            int index = lsm.getSelectedIndex();
+            selectedProduct = prodcuts.get(index);
+            System.out.println(index + ": " + selectedProduct);
+        }
+
+        //Llenar los campos del UI con la informacion del producto seleccionado.
+        if (selectedProduct != null) {
+            this.jTextFieldNombre.setText(selectedProduct.getName());
+            this.jTextFieldMarca.setText(selectedProduct.getBrand());
+            this.jTextFieldPrecio.setText(String.valueOf(selectedProduct.getPrice()));
+            this.jTextFieldInventario.setText(String.valueOf(selectedProduct.getStock()));
+            this.jTextFieldNota.setText(selectedProduct.getNotes());
+        }
+    }//GEN-LAST:event_jListProductosValueChanged
+
     private void jTextFieldNotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldNotaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldNotaActionPerformed
 
-    private void jListProductosValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jListProductosValueChanged
-       
-         Product selectedProduct = null;
-        if(!evt.getValueIsAdjusting()){
-            JList lsm = (javax.swing.JList)evt.getSource();
-            int index = lsm.getSelectedIndex();
-            selectedProduct = prodcuts.get(index);
-            System.out.println(index + ": " + selectedProduct);
-        }       
-        
-        if(selectedProduct!=null){
-            this.jTextFieldNombre.setText(selectedProduct.getName());
-            this.jTextFieldMarca.setText(selectedProduct.getBrand());
-            this.jTextFieldPrecio.setText(String.valueOf(selectedProduct.getPrice()));
-            this.jTextFieldNota.setText(selectedProduct.getNotes());
-            
-
-        }
-    }//GEN-LAST:event_jListProductosValueChanged
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -283,10 +384,12 @@ public class ProductsUI extends javax.swing.JFrame {
     private javax.swing.JButton jButtonGuardar;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabelFondo;
+    private javax.swing.JLabel jLabelInventario;
     private javax.swing.JLabel jLabelMarca;
     private javax.swing.JLabel jLabelNombre;
     private javax.swing.JLabel jLabelNota;
     private javax.swing.JLabel jLabelPrecio;
+    private javax.swing.JLabel jLabelProveedor;
     private javax.swing.JLabel jLabelTitulo;
     private javax.swing.JLabel jLabelTituloTabla;
     private javax.swing.JList<String> jListProductos;
@@ -294,40 +397,57 @@ public class ProductsUI extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JTextField jTextFieldInventario;
     private javax.swing.JTextField jTextFieldMarca;
     private javax.swing.JTextField jTextFieldNombre;
     private javax.swing.JTextField jTextFieldNota;
     private javax.swing.JTextField jTextFieldPrecio;
     // End of variables declaration//GEN-END:variables
 
-    DefaultListModel productsModel = new DefaultListModel();
     ProductDAO productDao = new ProductDAO();
-    List<Product> prodcuts = new ArrayList<>();
-    List<String> prodcutsDescription = new ArrayList<>();
-    
+    DefaultListModel productsModel;
+    List<Product> prodcuts;
+    List<String> prodcutsDescription;
+    boolean productListLoaded = false;
+
     private void loadProducts() {
+        productListLoaded = false;
+        productsModel = new DefaultListModel();
+        prodcuts = new ArrayList<>();
+        prodcutsDescription = new ArrayList<>();
+
         jListProductos.setModel(productsModel);
         prodcuts = productDao.getAllProductsFromDB();
-        
+
         for (Product p : prodcuts) {
-            prodcutsDescription.add(p.getName() +" - "+ p.getBrand()+ " - " + p.getPrice()+" - " + p.getNotes());
+            prodcutsDescription.add(p.getName() + " - " + p.getBrand() + " - " + p.getPrice() + " - " + p.getStock() + " - " + p.getNotes());
         }
-        
+
         productsModel.addAll(prodcutsDescription);
+        productListLoaded = true;
     }
-    
+
     SupplierDAO supplierDao = new SupplierDAO();
     List<Supplier> suppliers;
     List<String> suppliersDescription = new ArrayList<>();
-    
+
     private void loadSupliers() {
         suppliers = supplierDao.getAllSupplierFromDB();
-        
+
         for (Supplier p : suppliers) {
             suppliersDescription.add(p.getName());
         }
-        
+
         jComboBox1.setModel(new DefaultComboBoxModel<>(suppliersDescription.toArray(String[]::new)));
-        
+
+    }
+
+    private void cleanForm() {
+        jTextFieldMarca.setText(" ");
+        jTextFieldNombre.setText(" ");
+        jTextFieldInventario.setText(" ");
+        jTextFieldInventario.setText(" ");
+        jTextFieldPrecio.setText(" ");
+        this.selectedProduct = null;
     }
 }

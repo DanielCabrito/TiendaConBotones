@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
@@ -68,6 +67,7 @@ public class DocumentsUI extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jListDocumentosPorPagar = new javax.swing.JList<>();
         jComboBoxNameCompany = new javax.swing.JComboBox<>();
+        jButtonEliminar = new javax.swing.JButton();
         jLabelFondoDePantalla = new javax.swing.JLabel();
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -167,7 +167,7 @@ public class DocumentsUI extends javax.swing.JFrame {
                 jButtonGuardarActionPerformed(evt);
             }
         });
-        jPanel1.add(jButtonGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 450, 150, 50));
+        jPanel1.add(jButtonGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 450, 150, 50));
 
         jButtonLimpiar.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
         jButtonLimpiar.setForeground(new java.awt.Color(102, 102, 102));
@@ -209,6 +209,16 @@ public class DocumentsUI extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jComboBoxNameCompany, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 350, 270, -1));
+
+        jButtonEliminar.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
+        jButtonEliminar.setForeground(new java.awt.Color(102, 102, 102));
+        jButtonEliminar.setText("Eliminar");
+        jButtonEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEliminarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButtonEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 450, 150, 50));
 
         jLabelFondoDePantalla.setIcon(new javax.swing.ImageIcon("C:\\Users\\carri\\Downloads\\INTERFAZ\\21423.png")); // NOI18N
         jPanel1.add(jLabelFondoDePantalla, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 953, 519));
@@ -252,58 +262,116 @@ public class DocumentsUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField_IDActionPerformed
 
     private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
-     Document document=new Document();
-     int idDocumento = Integer.parseInt(this.jTextField_ID.getText());
-     document.setDocumentsId(idDocumento);
-     String site= this.jTextField_Lugar.getText();
-     document.setSite(site);
-     document.setSupplierId(1);
-     
-     float price=Float.parseFloat(this.jTextField_MontoAPagar.getText());
-     document.setAmountPay(price);
-     String siteCompany=this.jTextField_DireccionEmpresa.getText();
-     document.setSiteCompany(siteCompany);
-     
+        Document document = new Document();
+        String documentsIdText = jTextField_ID.getText().trim();
+
+        // Validar si el campo está vacío
+        if (documentsIdText.isEmpty()) {
+            // Mostrar un mensaje de error o realizar alguna acción apropiada
+            JOptionPane.showMessageDialog(this, "El campo DOCUMENTO_ID está vacío");
+            return;
+        }
+
+        // Convertir la cadena a un número entero
+        int documentsId;
+        try {
+            documentsId = Integer.parseInt(documentsIdText);
+        } catch (NumberFormatException e) {
+            // Mostrar un mensaje de error o realizar alguna acción apropiada
+            JOptionPane.showMessageDialog(this, "El valor en el campo DOCUMENTO_ID no es válido");
+            return;
+        }
+
+        // Resto del código...
+        document.setDocumentsId(documentsId);
+
+        String site = this.jTextField_Lugar.getText();
+        if (site == null || site.isBlank() || site.trim().length() < 2 || site.trim().length() > 45) {
+            JOptionPane.showMessageDialog(null, "ERROR LUGAR ", "DOCUMENTOS POR PAGAR", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        document.setSite(site);
+        //
+        document.setSupplierId(1);
+        //
+        float price = Float.parseFloat(this.jTextField_MontoAPagar.getText());
+        String priceString = String.valueOf(price);
+        if (priceString.isBlank() || priceString.trim().length() < 2 || priceString.trim().length() > 45) {
+            JOptionPane.showMessageDialog(null, "ERROR MONTO A PAGAR ", "DOCUMENTOS POR PAGAR", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        document.setAmountPay(price);
+        //
+        String siteCompany = this.jTextField_DireccionEmpresa.getText();
+        if (siteCompany == null || siteCompany.isBlank() || siteCompany.trim().length() < 2 || siteCompany.trim().length() > 45) {
+            JOptionPane.showMessageDialog(null, "ERROR DIRECCION EMPRESA ", "DOCUMENTOS POR PAGAR", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        document.setSiteCompany(siteCompany);
+        //
+
     try {
         String dateString = this.jTextField_Fecha.getText();
+         if (dateString == null || dateString.isBlank() || dateString.trim().length() < 2 || dateString.trim().length() > 45) {
+            JOptionPane.showMessageDialog(null, "ERROR FECHA ", "DOCUMENTOS POR PAGAR", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         long time;
         time = new SimpleDateFormat("dd-MM-yyyy").parse(dateString).getTime();
         document.setDate(new Date(time));
     } catch (ParseException ex) {
         Logger.getLogger(DocumentsUI.class.getName()).log(Level.SEVERE, null, ex);
     }
-    
-    
-    try {
-        String dateString = this.jTextField_FechaAPagar.getText();
-        long time;
-        time = new SimpleDateFormat("dd-MM-yyyy").parse(dateString).getTime();
-        document.setDatePay(new Date(time));
-    } catch (ParseException ex) {
-        Logger.getLogger(DocumentsUI.class.getName()).log(Level.SEVERE, null, ex);
-    }
-    
-    
-        System.out.println(document);
         
-        boolean saved = documentDao.setProductToDB(document);
-        if(saved){
-            JOptionPane.showMessageDialog(null, "Documento guardado", "Documentos", JOptionPane.INFORMATION_MESSAGE);
-        }else{
-            JOptionPane.showMessageDialog(null, "ERROR: Documento No Guardado", "Documentos", JOptionPane.INFORMATION_MESSAGE);
+
+
+        try {
+            String dateString = this.jTextField_FechaAPagar.getText();
+            if (dateString == null || dateString.isBlank() || dateString.trim().length() < 2 || dateString.trim().length() > 45) {
+            JOptionPane.showMessageDialog(null, "ERROR FECHA A PAGAR ", "DOCUMENTOS POR PAGAR", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+            long time;
+            time = new SimpleDateFormat("dd-MM-yyyy").parse(dateString).getTime();
+            document.setDatePay(new Date(time));
+        } catch (ParseException ex) {
+            Logger.getLogger(DocumentsUI.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-     
+        System.out.println(document);
+        
+        int documentsIndex = this.jComboBoxNameCompany.getSelectedIndex();
+        Supplier suplier = suppliers.get(documentsIndex);
+        document.setDocumentsId(document.getDocumentsId()); //TODO: Obtener proveedor del ComboBox
+
+        System.out.println(document);
+        
+        if (selectedDocument == null) {
+
+            boolean saved = documentDao.saveNewDocumentToDB(document);
+            if (saved) {
+                JOptionPane.showMessageDialog(null, "Documento guardado", "Documentos", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null, "ERROR: Documento No Guardado", "Documentos", JOptionPane.INFORMATION_MESSAGE);
+            }
+        } else {
+
+            boolean saved = documentDao.updateExistingDocumentToDB(selectedDocument.getDocumentsId(), document);
+            if (saved) {
+                JOptionPane.showMessageDialog(null, "Documento guardado", "Documentos", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null, "ERROR: Documento No Guardado", "Documentos", JOptionPane.INFORMATION_MESSAGE);
+            }
+        }
+        loadDocuments();
+        cleanForm();
+
+
     }//GEN-LAST:event_jButtonGuardarActionPerformed
 
     private void jButtonLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLimpiarActionPerformed
-        jTextField_DireccionEmpresa.setText("");
-        jTextField_Fecha.setText(" ");
-        jTextField_FechaAPagar.setText(" ");
-        jTextField_ID.setText(" ");
-        jTextField_Lugar.setText(" ");
-        jTextField_MontoAPagar.setText(" ");
-        
+        cleanForm();
+
     }//GEN-LAST:event_jButtonLimpiarActionPerformed
 
     private void jButtonPagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPagarActionPerformed
@@ -313,18 +381,17 @@ public class DocumentsUI extends javax.swing.JFrame {
     private void jComboBoxNameCompanyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxNameCompanyActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBoxNameCompanyActionPerformed
-
+    Document selectedDocument = null;
     private void jListDocumentosPorPagarValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jListDocumentosPorPagarValueChanged
-       
-         Document selectedDocument = null;
-        if(!evt.getValueIsAdjusting()){
-            JList lsm = (javax.swing.JList)evt.getSource();
+
+        if (!evt.getValueIsAdjusting() && documentListLoaded) {
+            JList lsm = (javax.swing.JList) evt.getSource();
             int index = lsm.getSelectedIndex();
             selectedDocument = documents.get(index);
             System.out.println(index + ": " + selectedDocument);
-        }       
-        
-        if(selectedDocument!=null){
+        }
+
+        if (selectedDocument != null) {
             this.jTextField_ID.setText(String.valueOf(selectedDocument.getDocumentsId()));
             this.jTextField_Lugar.setText(selectedDocument.getSite());
             this.jTextField_Fecha.setText(String.valueOf(selectedDocument.getDate()));
@@ -332,13 +399,26 @@ public class DocumentsUI extends javax.swing.JFrame {
             this.jTextField_FechaAPagar.setText(String.valueOf(selectedDocument.getDatePay()));
             this.jTextField_DireccionEmpresa.setText(selectedDocument.getSiteCompany());
 
-            
-
         }
     }//GEN-LAST:event_jListDocumentosPorPagarValueChanged
 
+    private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarActionPerformed
+        if (selectedDocument != null) {
+            //2. El usuario no ha seleccionado ningun producto de la lista. Guardar nuevo producto.
+            boolean deleted = documentDao.deleteDocument(selectedDocument.getDocumentsId());
+            if (deleted) {
+                JOptionPane.showMessageDialog(null, "Documento Eliminado", "Documentos", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null, "ERROR: Documento NO Eliminado", "Documentos ", JOptionPane.ERROR_MESSAGE);
+            }
+            this.loadDocuments();
+        }
+        cleanForm();
+    }//GEN-LAST:event_jButtonEliminarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonEliminar;
     private javax.swing.JButton jButtonGuardar;
     private javax.swing.JButton jButtonLimpiar;
     private javax.swing.JButton jButtonPagar;
@@ -368,46 +448,62 @@ public class DocumentsUI extends javax.swing.JFrame {
     DocumentDAO documentDao = new DocumentDAO();
     List<Document> documents = new ArrayList<>();
     List<String> documentsDescription = new ArrayList<>();
+    boolean documentListLoaded = false;
 
     private void loadDocuments() {
+        documentListLoaded = false;
+        documentsModel = new DefaultListModel();
+        documents = new ArrayList<>();
+        documentsDescription = new ArrayList<>();
+
         jListDocumentosPorPagar.setModel(documentsModel);
         documents = documentDao.getAllDocumentFromDB();
 
         for (Document p : documents) {
-            documentsDescription.add(p.getSupplierId() + " - " + p.getSite() + " - " + p.getDate()+ " - "+ p.getAmountPay()+ " - "+ p.getDatePay()+ " - "+ p.getSiteCompany());
+            documentsDescription.add(p.getSupplierId() + " - " + p.getSite() + " - " + p.getDate() + " - " + p.getAmountPay() + " - " + p.getDatePay() + " - " + p.getSiteCompany());
         }
 
         documentsModel.addAll(documentsDescription);
+        documentListLoaded = true;
     }
 
-   /** DefaultListModel supplierModel = new DefaultListModel();
+    /**
+     * DefaultListModel supplierModel = new DefaultListModel(); SupplierDAO
+     * supplierDao = new SupplierDAO(); List<Supplier> suppliers; List<String>
+     * suppliersDescription = new ArrayList<>();
+     *
+     * private void loadSuppliers() { jComboBoxNameCompany.setModel(); suppliers
+     * = supplierDao.getAllSupplierFromDB();
+     *
+     * for (Supplier p : suppliers) { suppliersDescription.add(p.getSupplierId()
+     * + " - " + p.getName()); }
+     *
+     * supplierModel.addAll(suppliersDescription);
+    }
+     */
     SupplierDAO supplierDao = new SupplierDAO();
     List<Supplier> suppliers;
     List<String> suppliersDescription = new ArrayList<>();
 
-    private void loadSuppliers() {
-        jComboBoxNameCompany.setModel();
+    private void loadSupliers() {
         suppliers = supplierDao.getAllSupplierFromDB();
 
         for (Supplier p : suppliers) {
-            suppliersDescription.add(p.getSupplierId() + " - " + p.getName());
+            suppliersDescription.add(p.getName());
         }
 
-        supplierModel.addAll(suppliersDescription);
-    }*/
-    
-    SupplierDAO supplierDao = new SupplierDAO();
-    List<Supplier> suppliers;
-    List<String> suppliersDescription = new ArrayList<>();
-        
-    private void loadSupliers(){
-        suppliers = supplierDao.getAllSupplierFromDB();
-        
-         for(Supplier p :suppliers ){
-             suppliersDescription.add(p.getName());
-         }
-         
         jComboBoxNameCompany.setModel(new DefaultComboBoxModel<>(suppliersDescription.toArray(String[]::new)));
 
     }
+
+    private void cleanForm() {
+        jTextField_DireccionEmpresa.setText("");
+        jTextField_Fecha.setText(" ");
+        jTextField_FechaAPagar.setText(" ");
+        jTextField_ID.setText(" ");
+        jTextField_Lugar.setText(" ");
+        jTextField_MontoAPagar.setText(" ");
+        this.selectedDocument = null;
+    }
+
 }

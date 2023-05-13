@@ -52,6 +52,7 @@ public class DatosClienteUI extends javax.swing.JFrame {
         jButtonFacturar = new javax.swing.JButton();
         jButtonGuardar = new javax.swing.JButton();
         jButtonLimpiar = new javax.swing.JButton();
+        jButtonEliminar = new javax.swing.JButton();
 
         jListClientes.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
@@ -118,6 +119,15 @@ public class DatosClienteUI extends javax.swing.JFrame {
             }
         });
 
+        jButtonEliminar.setBackground(new java.awt.Color(51, 153, 255));
+        jButtonEliminar.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
+        jButtonEliminar.setText("Eliminar");
+        jButtonEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEliminarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -128,15 +138,9 @@ public class DatosClienteUI extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(jLabelTitulo))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(40, 40, 40)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(57, 57, 57))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jButtonLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(47, 47, 47)))
+                        .addGap(40, 40, 40)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(57, 57, 57)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabelCorreo)
@@ -160,21 +164,26 @@ public class DatosClienteUI extends javax.swing.JFrame {
                                     .addComponent(jTextTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jTextRFC, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jTextDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextFieldNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jButtonGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButtonFacturar, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(67, Short.MAX_VALUE))
+                                    .addComponent(jTextFieldNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap(28, Short.MAX_VALUE)
+                        .addComponent(jButtonEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButtonLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButtonFacturar, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(14, 14, 14))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabelTitulo)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabelNombre)
                             .addComponent(jTextFieldNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -194,14 +203,16 @@ public class DatosClienteUI extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabelCorreo)
                             .addComponent(jTextCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButtonFacturar, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButtonGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(18, 18, 18))
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButtonLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonFacturar, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(22, 22, 22))
         );
 
@@ -224,29 +235,65 @@ public class DatosClienteUI extends javax.swing.JFrame {
       factura.setVisible(true);
       factura.setLocationRelativeTo(null);
     }//GEN-LAST:event_jButtonFacturarActionPerformed
-
     private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
        Client  clientUi= new Client();
+       
        String name=this.jTextFieldNombre.getText();
+        if (name == null || name.isBlank() || name.trim().length() < 2 || name.trim().length() > 45) {
+            JOptionPane.showMessageDialog(null, "ERROR: Nombre", " Datos Cliente ", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
        clientUi.setName(name);
+       //
        String adress=this.jTextDireccion.getText();
+        if (adress == null || adress.isBlank() || adress.trim().length() < 2 || adress.trim().length() > 45) {
+            JOptionPane.showMessageDialog(null, "ERROR: Direccion", "Datos Cliente", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
        clientUi.setAddress(adress);
+       //
        String rfc=this.jTextRFC.getText();
+       if (rfc == null || rfc.isBlank() || rfc.trim().length() < 2 || rfc.trim().length() > 45) {
+            JOptionPane.showMessageDialog(null, "ERROR: RFC", "Datos Cliente", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
        clientUi.setRfc(rfc);
+       //
        String cellPhone = this.jTextTelefono.getText();
+       if (cellPhone == null || cellPhone.isBlank() || cellPhone.trim().length() < 2 || cellPhone.trim().length() > 45) {
+            JOptionPane.showMessageDialog(null, "ERROR: RFC", "Datos Cliente", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
        clientUi.setPhoneNumber(cellPhone);
+       //
        String email=this.jTextCorreo.getText();
+       if (email == null || email.isBlank() || email.trim().length() < 2 || email.trim().length() > 45) {
+            JOptionPane.showMessageDialog(null, "ERROR: EMAIL ", "Datos Cliente", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
        clientUi.setEmail(email);
+       //
        clientUi.setClientId(1);
         System.out.println(clientUi);
         
-        
-        boolean saved = clientDao.setClientToDB(clientUi);
+        if(selectedClient==null){
+            boolean saved = clientDao.saveNewProductToDB(clientUi);
         if (saved){
             JOptionPane.showMessageDialog(null, "Cliente guardado", "Cliente", JOptionPane.INFORMATION_MESSAGE);
         }else{
             JOptionPane.showMessageDialog(null, "ERROR:Cliete No Guardado", "Cliente", JOptionPane.INFORMATION_MESSAGE);
         }
+        }else{
+            boolean saved =clientDao.updateExistingClientToDB(selectedClient.getClientId(), clientUi);
+            if(saved){
+                JOptionPane.showMessageDialog(null, "Cliente Actualizado", "Cliente", JOptionPane.INFORMATION_MESSAGE); 
+            }else{
+                 JOptionPane.showMessageDialog(null, "ERROR: Producto NO Actualizado", "Cliente", JOptionPane.INFORMATION_MESSAGE);
+            }
+        }
+        
+        loadClients();
+        cleanForm();
         
     }//GEN-LAST:event_jButtonGuardarActionPerformed
 
@@ -259,16 +306,12 @@ public class DatosClienteUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextCorreoActionPerformed
 
     private void jButtonLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLimpiarActionPerformed
-     jTextCorreo.setText(" ");
-     jTextDireccion.setText(" ");
-     jTextFieldNombre.setText(" ");
-     jTextRFC.setText(" ");
-     jTextTelefono.setText(" ");
+    cleanForm();
     }//GEN-LAST:event_jButtonLimpiarActionPerformed
-
+Client selectedClient = null;
     private void jListClientesValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jListClientesValueChanged
-         Client selectedClient = null;
-        if(!evt.getValueIsAdjusting()){
+
+        if(!evt.getValueIsAdjusting()&& clientListLoaded ){
             JList lsm = (javax.swing.JList)evt.getSource();
             int index = lsm.getSelectedIndex();
             selectedClient =   clients.get(index);
@@ -284,9 +327,26 @@ public class DatosClienteUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jListClientesValueChanged
 
+    private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarActionPerformed
+            
+        if(selectedClient!=null){
+            //2. El usuario no ha seleccionado ningun producto de la lista. Guardar nuevo producto.
+            boolean deleted = clientDao.deleteClientFromDB(selectedClient.getClientId());
+            if (deleted) {
+                JOptionPane.showMessageDialog(null, "Clente Eliminado", "Clientes", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null, "ERROR: Cliente NO Eliminado", "Clientes ", JOptionPane.ERROR_MESSAGE);
+            }
+            this.loadClients();
+        }
+        cleanForm();
+
+    }//GEN-LAST:event_jButtonEliminarActionPerformed
+
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonEliminar;
     private javax.swing.JButton jButtonFacturar;
     private javax.swing.JButton jButtonGuardar;
     private javax.swing.JButton jButtonLimpiar;
@@ -309,8 +369,15 @@ DefaultListModel clientsModel = new DefaultListModel();
     ClientDAO clientDao = new ClientDAO();
     List<Client> clients = new ArrayList<>();
     List<String> clientsDescription = new ArrayList<>();
+    boolean clientListLoaded = false;
         
     private void loadClients() {
+        clientListLoaded = false;
+        clientsModel = new DefaultListModel();
+        clients = new ArrayList<>();
+        clientsDescription = new ArrayList<>();
+        
+       
         jListClientes.setModel(clientsModel);
         clients = clientDao.getAllClientFromDB();
         
@@ -320,5 +387,14 @@ DefaultListModel clientsModel = new DefaultListModel();
          }
          
         clientsModel.addAll(clientsDescription);
+        clientListLoaded =  true;
+    }
+    private void cleanForm(){
+     jTextCorreo.setText(" ");
+     jTextDireccion.setText(" ");
+     jTextFieldNombre.setText(" ");
+     jTextRFC.setText(" ");
+     jTextTelefono.setText(" ");
+        this.selectedClient = null;
     }
 }
