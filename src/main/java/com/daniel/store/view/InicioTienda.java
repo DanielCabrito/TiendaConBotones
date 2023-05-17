@@ -139,7 +139,7 @@ public class InicioTienda extends javax.swing.JFrame {
     }//GEN-LAST:event_btnDocXPagarActionPerformed
 
     private void btnProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProductosActionPerformed
-        ProductsUI ui =new ProductsUI();
+        var ui =new ProductsUI();
         ui.setVisible(true);
         ui.setLocationRelativeTo(null);
     }//GEN-LAST:event_btnProductosActionPerformed

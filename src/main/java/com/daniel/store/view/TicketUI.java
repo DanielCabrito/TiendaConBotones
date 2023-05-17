@@ -6,10 +6,9 @@ package com.daniel.store.view;
 
 
 import com.daniel.store.dao.SaleDAO;
-import com.daniel.store.dao.SaleProductDAO;
 
 import com.daniel.store.entity.Sale;
-import com.daniel.store.entity.SaleProduct;
+
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultListModel;
@@ -35,7 +34,6 @@ public class TicketUI extends javax.swing.JFrame {
         this.jTextFieldSubtotal.setText(String.valueOf(currentSale.getSubtotal()));
         this.jTextFieldIva.setText(String.valueOf(currentSale.getIva()));
         this.jTextFieldTotal.setText(String.valueOf(currentSale.getTotal()));
-        
 
     }
 
@@ -162,7 +160,6 @@ public class TicketUI extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldSubtotalActionPerformed
 
-   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
@@ -180,7 +177,7 @@ public class TicketUI extends javax.swing.JFrame {
     SaleDAO saleDao = new SaleDAO();
     List<Sale> sales;
     List<String> salesDescription = new ArrayList<>();
-        /*ate void loadSalesUI() {
+    /*ate void loadSalesUI() {
         jListTicket.setModel(salesModel);
         sales = saleDao.getAllSaleFromDB();
         

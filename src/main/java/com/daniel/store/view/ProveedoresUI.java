@@ -118,16 +118,24 @@ public class ProveedoresUI extends javax.swing.JFrame {
         jLabelNombre.setText("Nombre:");
         getContentPane().add(jLabelNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 110, -1, -1));
 
-        jTextFieldNombre.setBackground(new java.awt.Color(153, 153, 153));
+        jTextFieldNombre.setBackground(new java.awt.Color(255, 255, 255));
+        jTextFieldNombre.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
+        jTextFieldNombre.setForeground(new java.awt.Color(0, 0, 0));
         getContentPane().add(jTextFieldNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 100, 440, 40));
 
-        jTextFieldTelefono.setBackground(new java.awt.Color(153, 153, 153));
+        jTextFieldTelefono.setBackground(new java.awt.Color(255, 255, 255));
+        jTextFieldTelefono.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
+        jTextFieldTelefono.setForeground(new java.awt.Color(0, 0, 0));
         getContentPane().add(jTextFieldTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 170, 440, 40));
 
-        jTextFieldDireccion.setBackground(new java.awt.Color(153, 153, 153));
+        jTextFieldDireccion.setBackground(new java.awt.Color(255, 255, 255));
+        jTextFieldDireccion.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
+        jTextFieldDireccion.setForeground(new java.awt.Color(0, 0, 0));
         getContentPane().add(jTextFieldDireccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 250, 440, 40));
 
-        jTextFieldNota.setBackground(new java.awt.Color(153, 153, 153));
+        jTextFieldNota.setBackground(new java.awt.Color(255, 255, 255));
+        jTextFieldNota.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
+        jTextFieldNota.setForeground(new java.awt.Color(0, 0, 0));
         getContentPane().add(jTextFieldNota, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 340, 440, 40));
 
         jLabelTituloProveedores.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N

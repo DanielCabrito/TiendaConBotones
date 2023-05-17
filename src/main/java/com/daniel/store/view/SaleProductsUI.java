@@ -429,24 +429,8 @@ public class SaleProductsUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jListInventarioValueChanged
 
     private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarActionPerformed
-DefaultTableModel tableModel = new DefaultTableModel();
 
- 
-         if(selectedProduct!=null){
-            //2. El usuario no ha seleccionado ningun producto de la lista. Guardar nuevo producto.
-            boolean deleted = productDAO(selectedProduct.getSupplierId());
-            if (deleted) {
-                JOptionPane.showMessageDialog(null, "Clente Eliminado", "Clientes", JOptionPane.INFORMATION_MESSAGE);
-            } else {
-                JOptionPane.showMessageDialog(null, "ERROR: Cliente NO Eliminado", "Clientes ", JOptionPane.ERROR_MESSAGE);
-            }
-            this.loadClients();
-        }
-        cleanForm();
-        
-
-
-
+eliminarDatos();
     }//GEN-LAST:event_jButtonEliminarActionPerformed
            
       
@@ -488,5 +472,9 @@ DefaultTableModel tableModel = new DefaultTableModel();
     private javax.swing.JTextField jTextFieldTotal;
     // End of variables declaration//GEN-END:variables
  
-
+    public DefaultListModel eliminarDatos(){
+        
+        DefaultListModel modelo= (DefaultListModel)jListCarrito.getModel();
+        return modelo;
+    } 
 }

@@ -384,7 +384,17 @@ public class DocumentsUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonLimpiarActionPerformed
 
     private void jButtonPagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPagarActionPerformed
-        // TODO add your handling code here:
+         if (selectedDocument != null) {
+            //2. El usuario no ha seleccionado ningun producto de la lista. Guardar nuevo producto.
+            boolean deleted = documentDao.deleteDocument(selectedDocument.getDocumentsId());
+            if (deleted) {
+                JOptionPane.showMessageDialog(null, "Documento Pagado", "Documentos", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null, "ERROR: Documento NO Pagado", "Documentos ", JOptionPane.ERROR_MESSAGE);
+            }
+            this.loadDocuments();
+        }
+        cleanForm();
     }//GEN-LAST:event_jButtonPagarActionPerformed
 
     private void jComboBoxNameCompanyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxNameCompanyActionPerformed

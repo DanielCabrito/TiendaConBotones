@@ -2,8 +2,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package com.daniel.store.view;
 
+package com.daniel.store.view;
 import com.daniel.store.dao.ProductDAO;
 import com.daniel.store.dao.SupplierDAO;
 import com.daniel.store.entity.Product;
@@ -446,7 +446,7 @@ public class ProductsUI extends javax.swing.JFrame {
         jTextFieldMarca.setText(" ");
         jTextFieldNombre.setText(" ");
         jTextFieldInventario.setText(" ");
-        jTextFieldInventario.setText(" ");
+        jTextFieldNota.setText(" ");
         jTextFieldPrecio.setText(" ");
         this.selectedProduct = null;
     }
