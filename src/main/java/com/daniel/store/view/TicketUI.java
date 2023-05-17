@@ -25,8 +25,18 @@ public class TicketUI extends javax.swing.JFrame {
      */
     public TicketUI() {
         initComponents();
-        loadProductsDescription();
-        loadSalesUI();
+        //loadProductsDescription();
+        //loadSalesUI();
+    }
+
+    TicketUI(DefaultListModel shoppingCarDescriptionModel, Sale currentSale) {
+        initComponents();
+        this.jListProductos.setModel(shoppingCarDescriptionModel);
+        this.jTextFieldSubtotal.setText(String.valueOf(currentSale.getSubtotal()));
+        this.jTextFieldIva.setText(String.valueOf(currentSale.getIva()));
+        this.jTextFieldTotal.setText(String.valueOf(currentSale.getTotal()));
+        
+
     }
 
     /**
@@ -40,35 +50,71 @@ public class TicketUI extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabelTitulo = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jListTicket = new javax.swing.JList<>();
         jScrollPane2 = new javax.swing.JScrollPane();
         jListProductos = new javax.swing.JList<>();
+        jTextFieldSubtotal = new javax.swing.JTextField();
+        jTextFieldTotal = new javax.swing.JTextField();
+        jTextFieldIva = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
 
         jLabelTitulo.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
         jLabelTitulo.setForeground(new java.awt.Color(0, 0, 0));
         jLabelTitulo.setText("TICKET");
 
-        jListTicket.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
-        jScrollPane1.setViewportView(jListTicket);
-
         jScrollPane2.setViewportView(jListProductos);
+
+        jTextFieldSubtotal.setEnabled(false);
+        jTextFieldSubtotal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldSubtotalActionPerformed(evt);
+            }
+        });
+
+        jTextFieldTotal.setEnabled(false);
+
+        jTextFieldIva.setEnabled(false);
+
+        jLabel1.setText("TOTAL");
+
+        jLabel2.setText("Subtotal");
+
+        jLabel3.setText("IVA");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGap(137, 137, 137)
+                            .addComponent(jLabelTitulo))
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGap(21, 21, 21)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(137, 137, 137)
-                        .addComponent(jLabelTitulo))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(21, 21, 21)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(39, 39, 39)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jTextFieldSubtotal, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextFieldIva, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jTextFieldTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(23, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGap(49, 49, 49)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(245, Short.MAX_VALUE)))
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGap(49, 49, 49)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(245, Short.MAX_VALUE)))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -77,9 +123,25 @@ public class TicketUI extends javax.swing.JFrame {
                 .addComponent(jLabelTitulo)
                 .addGap(20, 20, 20)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(34, Short.MAX_VALUE))
+                .addGap(44, 44, 44)
+                .addComponent(jTextFieldSubtotal, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jTextFieldIva, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextFieldTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(50, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                    .addContainerGap(379, Short.MAX_VALUE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(148, 148, 148)))
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                    .addContainerGap(433, Short.MAX_VALUE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(94, 94, 94)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -96,22 +158,29 @@ public class TicketUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jTextFieldSubtotalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldSubtotalActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldSubtotalActionPerformed
+
    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabelTitulo;
     private javax.swing.JList<String> jListProductos;
-    private javax.swing.JList<String> jListTicket;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTextField jTextFieldIva;
+    private javax.swing.JTextField jTextFieldSubtotal;
+    private javax.swing.JTextField jTextFieldTotal;
     // End of variables declaration//GEN-END:variables
    DefaultListModel salesModel = new DefaultListModel();
     SaleDAO saleDao = new SaleDAO();
     List<Sale> sales;
     List<String> salesDescription = new ArrayList<>();
-        
-    private void loadSalesUI() {
+        /*ate void loadSalesUI() {
         jListTicket.setModel(salesModel);
         sales = saleDao.getAllSaleFromDB();
         
@@ -137,4 +206,12 @@ public class TicketUI extends javax.swing.JFrame {
          
         salesproductsModel.addAll(salesProductsDescription);
     }
+    
+        
+       salesModel.
+        product.setAmount(Integer.parseInt(amount));
+        product.setUnitPrice((float) selectedProduct.getPrice());
+        shoppingCar.add(product);
+        this.jListCarrito.setModel(shoppingCarDescriptionModel);
+        shoppingCarDescriptionModel.addElement(description);*/
 }

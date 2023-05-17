@@ -5,14 +5,18 @@
 package com.daniel.store.view;
 
 import com.daniel.store.dao.ProductDAO;
+import com.daniel.store.dao.SaleDAO;
 import com.daniel.store.dao.SaleProductDAO;
 import com.daniel.store.entity.Product;
 import com.daniel.store.entity.Sale;
 import com.daniel.store.entity.SaleProduct;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JList;
@@ -26,13 +30,13 @@ import javax.swing.table.DefaultTableModel;
  */
 public class SaleProductsUI extends javax.swing.JFrame {
 
+    private SaleDAO saleDAO = new SaleDAO();
     private SaleProductDAO saleProductDao = new SaleProductDAO();
     private ProductDAO productDAO = new ProductDAO();
     private Sale currentSale;
     private Product selectedProduct = null;
+    private final float IVA = 0.16f;
    
-
-
     /**
      * Al iniciar el UI hay que:
      * 1. Cargar el UI (initComponents() )
@@ -51,11 +55,11 @@ public class SaleProductsUI extends javax.swing.JFrame {
     private List<String> prodcutsDescription = new ArrayList<>();
     //Modelo usado para mostrar productos en la Lista
     DefaultListModel productsDescriptionModel = new DefaultListModel();
-    boolean saleListLoaded = false;
+    boolean productListLoaded = false;
     
     //Cargar los productos disponibles para vender
     private void loadProducts() {
-        saleListLoaded = false;
+        productListLoaded = false;
         productsDescriptionModel = new DefaultListModel();
         products = new ArrayList<>();
         prodcutsDescription = new ArrayList<>();
@@ -68,14 +72,12 @@ public class SaleProductsUI extends javax.swing.JFrame {
         }
 
         productsDescriptionModel.addAll(prodcutsDescription);
-        saleListLoaded = true;
+        productListLoaded = true;
     }  
    
     
     //Productos del carrito
     private List<SaleProduct> shoppingCar = new ArrayList<>();
-    //Descripciones para mostrar al usaurio en el carrito de compras
-    private List<String> shoppingCarDescription = new ArrayList<>();
     //Modelo usado para mostrar productos en el carrito
     DefaultListModel shoppingCarDescriptionModel = new DefaultListModel();
     private void addToShoppingCar(){
@@ -100,7 +102,7 @@ public class SaleProductsUI extends javax.swing.JFrame {
         
         
          if (!subtotal.isEmpty()) {
-        currentSale.setTotal(currentSale.getTotal() + Float.parseFloat(subtotal));
+        currentSale.setSubtotal(currentSale.getSubtotal() + Float.parseFloat(subtotal));
 }
         this.jTextFieldTotal.setText( String.valueOf(currentSale.getTotal()));
         
@@ -341,20 +343,52 @@ public class SaleProductsUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonPagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPagarActionPerformed
-        SeleccionDeTicketFacturaUI seleccionUI = new SeleccionDeTicketFacturaUI ();
+        //1. Guardar la Venta (genreal)
+        currentSale.setIva( currentSale.getSubtotal() * IVA);
+        currentSale.setTotal( currentSale.getIva() + currentSale.getSubtotal());
+        int saleId;
+        try {
+            saleId = saleDAO.saveNewSaleDB(currentSale);
+            currentSale.setSaleId(saleId);
+        } catch (SQLException ex) {
+            Logger.getLogger(SaleProductsUI.class.getName()).log(Level.SEVERE, null, ex);
+            return;
+        }
+        
+        for(SaleProduct product:shoppingCar){
+            //2. Guardar cada producto vendido
+            product.setSaleId(saleId);
+            saleProductDao.saveNewProductSaleInDB(product);
+            //3. Actuaizar Stock de productos vendidos
+            productDAO.updateProductStockInDB(product);
+        }
+               
+
+        SeleccionDeTicketFacturaUI seleccionUI = new SeleccionDeTicketFacturaUI (shoppingCarDescriptionModel, currentSale);
+        
+        //LIMPIAR TODO
+        cleanForm();
+        cleanShoppingCart();
+        loadProducts();
+        currentSale = new Sale();
+        
         seleccionUI.setVisible(true);
         seleccionUI.setLocationRelativeTo(null);
         
     }//GEN-LAST:event_jButtonPagarActionPerformed
 
-    //Guardar ID de la venta actual.
+    private void cleanShoppingCart(){
+        shoppingCar = new ArrayList<>();
+        shoppingCarDescriptionModel = new DefaultListModel();
+        this.jListCarrito.setModel(shoppingCarDescriptionModel);
+    }
+    
     private void cleanForm (){
-    jTextFieldCantidad.setText(" ");
-    jTextFieldPSubtotal.setText(" ");
-    jTextFieldPrice.setText(" ");
-    jTextFieldProductName.setText(" "); 
-    Integer saleId = null; 
-        
+        jTextFieldCantidad.setText(" ");
+        jTextFieldPSubtotal.setText(" ");
+        jTextFieldPrice.setText(" ");
+        jTextFieldProductName.setText(" "); 
+        selectedProduct = null;
     }
     
     
@@ -379,7 +413,7 @@ public class SaleProductsUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextFieldTotalActionPerformed
 
     private void jListInventarioValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jListInventarioValueChanged
-        if(!evt.getValueIsAdjusting()){
+        if(!evt.getValueIsAdjusting() && this.productListLoaded){
             JList lsm = (javax.swing.JList)evt.getSource();
             int index = lsm.getSelectedIndex();
             selectedProduct = products.get(index);
@@ -398,15 +432,18 @@ public class SaleProductsUI extends javax.swing.JFrame {
 DefaultTableModel tableModel = new DefaultTableModel();
 
  
-        jButtonEliminar.addActionListener(new ActionListener() {
-    public void actionPerformed(ActionEvent e) {
-        DefaultTableModel model = (DefaultTableModel) jListCarrito.getModel();
-        int selectedRow = jListCarrito.getSelectedIndex();
-        if (selectedRow != -1) { // Se ha seleccionado una fila
-            model.removeRow(selectedRow); // Elimina la fila seleccionada del modelo de la tabla
+         if(selectedProduct!=null){
+            //2. El usuario no ha seleccionado ningun producto de la lista. Guardar nuevo producto.
+            boolean deleted = productDAO(selectedProduct.getSupplierId());
+            if (deleted) {
+                JOptionPane.showMessageDialog(null, "Clente Eliminado", "Clientes", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null, "ERROR: Cliente NO Eliminado", "Clientes ", JOptionPane.ERROR_MESSAGE);
+            }
+            this.loadClients();
         }
-    }
-});
+        cleanForm();
+        
 
 
 

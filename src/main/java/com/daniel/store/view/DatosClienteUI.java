@@ -5,9 +5,15 @@
 package com.daniel.store.view;
 
 import com.daniel.store.dao.ClientDAO;
+import com.daniel.store.dao.BillDAO;
+import com.daniel.store.entity.Bill;
 import com.daniel.store.entity.Client;
+import com.daniel.store.entity.Sale;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
@@ -17,13 +23,24 @@ import javax.swing.JOptionPane;
  * @author carri
  */
 public class DatosClienteUI extends javax.swing.JFrame {
-
+     private DefaultListModel shoppingCarDescriptionModel;
+    private Sale currentSale;
+    private BillDAO facturaDao =new BillDAO();
     /**
      * Creates new form DatosClienteUI
      */
+    
+    
     public DatosClienteUI() {
         initComponents();
         loadClients();
+    }
+    
+    public DatosClienteUI(DefaultListModel shoppingCarDescriptionMode, Sale currentSale) {
+        initComponents();
+        loadClients();
+        this.shoppingCarDescriptionModel=shoppingCarDescriptionMode;
+        this.currentSale = currentSale;
     }
 
     /**
@@ -231,9 +248,19 @@ public class DatosClienteUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonFacturarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonFacturarActionPerformed
-      FacturaUI factura=new FacturaUI();
+         Bill bill =  new Bill();
+         bill.setClient(selectedClient.getClientId());
+         bill.setSaleId(currentSale.getSaleId());
+         try {
+             facturaDao.saveNewBillDB(bill);
+         } catch (SQLException ex) {
+             Logger.getLogger(DatosClienteUI.class.getName()).log(Level.SEVERE, null, ex);
+         }
+      
+      FacturaUI factura=new FacturaUI(shoppingCarDescriptionModel, currentSale, selectedClient);
       factura.setVisible(true);
       factura.setLocationRelativeTo(null);
+      
     }//GEN-LAST:event_jButtonFacturarActionPerformed
     private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
        Client  clientUi= new Client();
@@ -278,11 +305,11 @@ public class DatosClienteUI extends javax.swing.JFrame {
         
         if(selectedClient==null){
             boolean saved = clientDao.saveNewProductToDB(clientUi);
-        if (saved){
-            JOptionPane.showMessageDialog(null, "Cliente guardado", "Cliente", JOptionPane.INFORMATION_MESSAGE);
-        }else{
-            JOptionPane.showMessageDialog(null, "ERROR:Cliete No Guardado", "Cliente", JOptionPane.INFORMATION_MESSAGE);
-        }
+            if (saved){
+                JOptionPane.showMessageDialog(null, "Cliente guardado", "Cliente", JOptionPane.INFORMATION_MESSAGE);
+            }else{
+                JOptionPane.showMessageDialog(null, "ERROR:Cliete No Guardado", "Cliente", JOptionPane.INFORMATION_MESSAGE);
+            }
         }else{
             boolean saved =clientDao.updateExistingClientToDB(selectedClient.getClientId(), clientUi);
             if(saved){
@@ -293,6 +320,7 @@ public class DatosClienteUI extends javax.swing.JFrame {
         }
         
         loadClients();
+        //selectedClient = clientUi
         cleanForm();
         
     }//GEN-LAST:event_jButtonGuardarActionPerformed

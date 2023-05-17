@@ -11,6 +11,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -73,19 +74,20 @@ public class SaleProductDAO {
         return saleProductList;
     }
     
-     
-     
-     
     
-     public boolean setSaleProductToDB(SaleProduct saleProductoUi) {
-        String sql = "INSERT INTO tiendacabrito.VENTA_PRODUCTO (PRODUCTO_ID, CANTIDAD, PRECIO_UNIDAD) "
-                + "VALUES (?,?,?)";
+     
+     
+
+    public boolean saveNewProductSaleInDB(SaleProduct saleProductUi) {
+        String sql = "INSERT INTO tiendacabrito.VENTA_PRODUCTO (PRODUCTO_ID, CANTIDAD, PRECIO_UNIDAD,VENTA_ID) "
+                + "VALUES (?,?,?,?)";
         try (Connection con = DriverManager.getConnection( myConnectionURL, user, pwd);
                 PreparedStatement ps = con.prepareStatement(sql)) {
             
-            ps.setInt(1, saleProductoUi.getProductId());
-            ps.setInt(2, saleProductoUi.getAmount());
-            ps.setDouble(3, saleProductoUi.getUnitPrice());
+            ps.setInt(1, saleProductUi.getProductId());
+            ps.setInt(2, saleProductUi.getAmount());
+            ps.setDouble(3, saleProductUi.getUnitPrice());
+            ps.setInt(4, saleProductUi.getSaleId());
           
             return ps.executeUpdate()>0;
         } catch (SQLException e) {
@@ -93,4 +95,8 @@ public class SaleProductDAO {
             return false;
         }
     }
-}
+    }
+
+
+     
+

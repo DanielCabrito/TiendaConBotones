@@ -14,11 +14,13 @@ import com.daniel.store.dao.SupplierDAO;
 import com.daniel.store.entity.Bill;
 import com.daniel.store.entity.Client;
 import com.daniel.store.entity.Document;
+import com.daniel.store.entity.Login;
 import com.daniel.store.entity.Product;
 import com.daniel.store.entity.Sale;
 import com.daniel.store.entity.SaleProduct;
 import com.daniel.store.entity.Supplier;
 import com.daniel.store.view.InicioTienda;
+import com.daniel.store.view.LoginUI;
 import java.util.List;
 
 /**
@@ -28,9 +30,12 @@ import java.util.List;
 public class Tienda {
      public static void main(String[] args) {
          //llamamos y hacemos visible nuestra pantalla
-         InicioTienda princ = new InicioTienda ();
-         princ.setVisible(true);
-         princ.setLocationRelativeTo(null);
+         LoginUI login = new LoginUI();
+         login.setVisible(true);
+         login.setLocationRelativeTo(null);
+        
+        
+         
          
          ProductDAO productDao = new ProductDAO();
          List<Product> prodcuts = productDao.getAllProductsFromDB();

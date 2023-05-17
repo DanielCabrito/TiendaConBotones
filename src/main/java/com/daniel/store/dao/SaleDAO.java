@@ -11,6 +11,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,4 +48,37 @@ public class SaleDAO {
         
         return saleList;
     }
-}
+    
+     
+    public int saveNewSaleDB(Sale sale) throws SQLException {
+        String sql = "INSERT INTO tiendacabrito.VENTAS (FECHA, SUBTOTAL, IVA, TOTAL) VALUES (CURRENT_TIMESTAMP,?,?,?)";
+        try (Connection con = DriverManager.getConnection( myConnectionURL, user, pwd);
+                PreparedStatement ps = con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS)) {
+            
+            ps.setFloat(1, sale.getSubtotal());
+            ps.setFloat(2, sale.getIva());
+            ps.setFloat(3, sale.getTotal());
+            
+ 
+            int affectedRows = ps.executeUpdate();
+
+            if (affectedRows == 0) {
+                throw new SQLException("Creating sale failed, no rows affected.");
+            }
+
+            try (ResultSet generatedKeys = ps.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    return generatedKeys.getInt(1);
+                }
+                else {
+                    throw new SQLException("Creating sale failed, no ID obtained.");
+                }
+            }catch (SQLException e) {
+                throw e;
+            }
+        }
+    }
+    
+   }
+    
+

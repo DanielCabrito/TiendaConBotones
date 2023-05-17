@@ -10,6 +10,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,5 +45,20 @@ public class BillDAO {
         }
         
         return billList;
+    }
+    
+     public boolean saveNewBillDB(Bill bill) throws SQLException {
+        String sql = "INSERT INTO tiendacabrito.FACTURA (FECHA,CLIENTE_ID, VENTA_ID) VALUES (CURRENT_TIMESTAMP,?,?)";
+        try (Connection con = DriverManager.getConnection( myConnectionURL, user, pwd);
+                PreparedStatement ps = con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS)) {
+            
+            ps.setInt(1, bill.getClient());
+            ps.setInt(2, bill.getSaleId());
+            
+        return ps.executeUpdate()>0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }

@@ -13,7 +13,7 @@ import java.util.Date;
  */
 public class Bill {
     private int billsId;
-    private int client;
+    private int clientId;
     private Date date;
     private int saleId;
 
@@ -22,7 +22,7 @@ public class Bill {
 
     public Bill(int billsId, int client, Date date, int saleId) {
         this.billsId = billsId;
-        this.client = client;
+        this.clientId = client;
         this.date = date;
         this.saleId = saleId;
     }
@@ -36,11 +36,11 @@ public class Bill {
     }
 
     public int getClient() {
-        return client;
+        return clientId;
     }
 
     public void setClient(int client) {
-        this.client = client;
+        this.clientId = client;
     }
 
     public Date getDate() {
@@ -61,7 +61,7 @@ public class Bill {
 
     @Override
     public String toString() {
-        return "Bill{" + "billsId=" + billsId + ", client=" + client + ", date=" + date + ", saleId=" + saleId + '}';
+        return "Bill{" + "billsId=" + billsId + ", client=" + clientId + ", date=" + date + ", saleId=" + saleId + '}';
     }
 
     

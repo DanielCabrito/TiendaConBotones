@@ -1,6 +1,7 @@
 package com.daniel.store.dao;
 
 import com.daniel.store.entity.Product;
+import com.daniel.store.entity.SaleProduct;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -124,6 +125,22 @@ public class ProductDAO {
             e.printStackTrace();
             return false;
         }
+    }
+
+    public boolean updateProductStockInDB(SaleProduct product) {
+       
+        String sql = "UPDATE tiendacabrito.productos SET INVENTARIO = INVENTARIO - ?  WHERE (PRODUCTO_ID = ?)";
+        try (Connection con = DriverManager.getConnection( myConnectionURL, user, pwd);
+                PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, product.getAmount());
+            ps.setInt(2, product.getProductId());
+           
+            return ps.executeUpdate()>0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        
     }
 
 }

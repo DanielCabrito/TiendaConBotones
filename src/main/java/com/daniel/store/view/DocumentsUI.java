@@ -34,6 +34,15 @@ public class DocumentsUI extends javax.swing.JFrame {
         loadDocuments();
         loadSupliers();
     }
+    Document selectedDocument = null;
+    SupplierDAO supplierDao = new SupplierDAO();
+    List<Supplier> suppliers;
+    List<String> suppliersDescription = new ArrayList<>();
+     DefaultListModel documentsModel = new DefaultListModel();
+    DocumentDAO documentDao = new DocumentDAO();
+    List<Document> documents = new ArrayList<>();
+    List<String> documentsDescription = new ArrayList<>();
+    boolean documentListLoaded = false;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -381,7 +390,7 @@ public class DocumentsUI extends javax.swing.JFrame {
     private void jComboBoxNameCompanyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxNameCompanyActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBoxNameCompanyActionPerformed
-    Document selectedDocument = null;
+    
     private void jListDocumentosPorPagarValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jListDocumentosPorPagarValueChanged
 
         if (!evt.getValueIsAdjusting() && documentListLoaded) {
@@ -444,11 +453,7 @@ public class DocumentsUI extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField_Lugar;
     private javax.swing.JTextField jTextField_MontoAPagar;
     // End of variables declaration//GEN-END:variables
- DefaultListModel documentsModel = new DefaultListModel();
-    DocumentDAO documentDao = new DocumentDAO();
-    List<Document> documents = new ArrayList<>();
-    List<String> documentsDescription = new ArrayList<>();
-    boolean documentListLoaded = false;
+
 
     private void loadDocuments() {
         documentListLoaded = false;
@@ -481,10 +486,7 @@ public class DocumentsUI extends javax.swing.JFrame {
      * supplierModel.addAll(suppliersDescription);
     }
      */
-    SupplierDAO supplierDao = new SupplierDAO();
-    List<Supplier> suppliers;
-    List<String> suppliersDescription = new ArrayList<>();
-
+    
     private void loadSupliers() {
         suppliers = supplierDao.getAllSupplierFromDB();
 

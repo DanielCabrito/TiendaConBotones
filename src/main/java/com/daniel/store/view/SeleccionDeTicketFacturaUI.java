@@ -4,17 +4,31 @@
  */
 package com.daniel.store.view;
 
+import com.daniel.store.entity.Sale;
+import com.daniel.store.entity.SaleProduct;
+import java.util.List;
+import javax.swing.DefaultListModel;
+
 /**
  *
  * @author carri
  */
 public class SeleccionDeTicketFacturaUI extends javax.swing.JFrame {
 
+    private DefaultListModel shoppingCarDescriptionModel;
+    private Sale currentSale;
+
     /**
      * Creates new form SeleccionDeTicketFacturaUI
      */
     public SeleccionDeTicketFacturaUI() {
         initComponents();
+    }
+
+    SeleccionDeTicketFacturaUI(DefaultListModel shoppingCarDescriptionMode, Sale currentSale) {
+        initComponents();
+        this.shoppingCarDescriptionModel=shoppingCarDescriptionMode;
+        this.currentSale = currentSale;
     }
 
     /**
@@ -37,7 +51,7 @@ public class SeleccionDeTicketFacturaUI extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel2.setText("Seleccionar comprobante");
+        jLabel2.setText("Venta Completada. Seleccionar comprobante");
 
         jButton1.setBackground(new java.awt.Color(0, 0, 0));
         jButton1.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
@@ -70,22 +84,22 @@ public class SeleccionDeTicketFacturaUI extends javax.swing.JFrame {
                         .addComponent(jLabel1))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(62, 62, 62)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel2))))
-                .addContainerGap(64, Short.MAX_VALUE))
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(28, 28, 28)
+                        .addComponent(jLabel2)))
+                .addContainerGap(40, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(46, 46, 46)
+                .addGap(40, 40, 40)
                 .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -107,13 +121,14 @@ public class SeleccionDeTicketFacturaUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        TicketUI ticketUI = new TicketUI();
+        TicketUI ticketUI = new TicketUI(shoppingCarDescriptionModel, currentSale);
         ticketUI.setVisible(true);
         ticketUI.setLocationRelativeTo(null);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-       DatosClienteUI datosClientes = new DatosClienteUI();
+       DatosClienteUI datosClientes = new DatosClienteUI(shoppingCarDescriptionModel, currentSale);
+       
        datosClientes.setVisible(true);
        datosClientes.setLocationRelativeTo(null);
     }//GEN-LAST:event_jButton2ActionPerformed
