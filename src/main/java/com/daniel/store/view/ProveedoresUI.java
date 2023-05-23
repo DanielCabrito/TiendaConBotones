@@ -76,7 +76,7 @@ public class ProveedoresUI extends javax.swing.JFrame {
                 jToggleButtonEliminarActionPerformed(evt);
             }
         });
-        getContentPane().add(jToggleButtonEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 580, 140, 50));
+        getContentPane().add(jToggleButtonEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 560, 170, 70));
 
         jToggleButtonGuardar.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
         jToggleButtonGuardar.setForeground(new java.awt.Color(102, 102, 102));
@@ -86,7 +86,7 @@ public class ProveedoresUI extends javax.swing.JFrame {
                 jToggleButtonGuardarActionPerformed(evt);
             }
         });
-        getContentPane().add(jToggleButtonGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 580, 140, 50));
+        getContentPane().add(jToggleButtonGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 560, 160, 70));
 
         jToggleButtonCancelar.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
         jToggleButtonCancelar.setForeground(new java.awt.Color(102, 102, 102));
@@ -96,52 +96,52 @@ public class ProveedoresUI extends javax.swing.JFrame {
                 jToggleButtonCancelarActionPerformed(evt);
             }
         });
-        getContentPane().add(jToggleButtonCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 580, 140, 50));
+        getContentPane().add(jToggleButtonCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 560, 160, 70));
 
         jLabelTelefono.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
         jLabelTelefono.setForeground(new java.awt.Color(102, 102, 102));
         jLabelTelefono.setText("Telefono:");
-        getContentPane().add(jLabelTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 180, -1, -1));
+        getContentPane().add(jLabelTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 210, -1, -1));
 
         jLabelDireccion.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
         jLabelDireccion.setForeground(new java.awt.Color(102, 102, 102));
         jLabelDireccion.setText("Direccion:");
-        getContentPane().add(jLabelDireccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 260, -1, -1));
+        getContentPane().add(jLabelDireccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 290, -1, -1));
 
         jLabelNotas.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
         jLabelNotas.setForeground(new java.awt.Color(102, 102, 102));
         jLabelNotas.setText("Notas:");
-        getContentPane().add(jLabelNotas, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 350, -1, -1));
+        getContentPane().add(jLabelNotas, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 390, -1, -1));
 
         jLabelNombre.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
         jLabelNombre.setForeground(new java.awt.Color(102, 102, 102));
         jLabelNombre.setText("Nombre:");
-        getContentPane().add(jLabelNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 110, -1, -1));
+        getContentPane().add(jLabelNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 110, -1, -1));
 
         jTextFieldNombre.setBackground(new java.awt.Color(255, 255, 255));
         jTextFieldNombre.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
         jTextFieldNombre.setForeground(new java.awt.Color(0, 0, 0));
-        getContentPane().add(jTextFieldNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 100, 440, 40));
+        getContentPane().add(jTextFieldNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 110, 440, 40));
 
         jTextFieldTelefono.setBackground(new java.awt.Color(255, 255, 255));
         jTextFieldTelefono.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
         jTextFieldTelefono.setForeground(new java.awt.Color(0, 0, 0));
-        getContentPane().add(jTextFieldTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 170, 440, 40));
+        getContentPane().add(jTextFieldTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 200, 440, 40));
 
         jTextFieldDireccion.setBackground(new java.awt.Color(255, 255, 255));
         jTextFieldDireccion.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
         jTextFieldDireccion.setForeground(new java.awt.Color(0, 0, 0));
-        getContentPane().add(jTextFieldDireccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 250, 440, 40));
+        getContentPane().add(jTextFieldDireccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 290, 440, 40));
 
         jTextFieldNota.setBackground(new java.awt.Color(255, 255, 255));
         jTextFieldNota.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
         jTextFieldNota.setForeground(new java.awt.Color(0, 0, 0));
-        getContentPane().add(jTextFieldNota, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 340, 440, 40));
+        getContentPane().add(jTextFieldNota, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 390, 440, 40));
 
         jLabelTituloProveedores.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
         jLabelTituloProveedores.setForeground(new java.awt.Color(102, 102, 102));
         jLabelTituloProveedores.setText("PROVEEDORES");
-        getContentPane().add(jLabelTituloProveedores, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 150, -1, -1));
+        getContentPane().add(jLabelTituloProveedores, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 110, -1, -1));
 
         jListProveedores.addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentHidden(java.awt.event.ComponentEvent evt) {
@@ -155,7 +155,7 @@ public class ProveedoresUI extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jListProveedores);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 190, 230, 320));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 170, 230, 450));
 
         jLabelTituloProveedores1.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
         jLabelTituloProveedores1.setForeground(new java.awt.Color(102, 102, 102));
@@ -165,6 +165,11 @@ public class ProveedoresUI extends javax.swing.JFrame {
         jLabelFondoPantalla.setIcon(new javax.swing.ImageIcon("C:\\Users\\carri\\Downloads\\INTERFAZ\\21423.png")); // NOI18N
         jLabelFondoPantalla.setText("jLabel1");
         jLabelFondoPantalla.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jLabelFondoPantalla.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentHidden(java.awt.event.ComponentEvent evt) {
+                jLabelFondoPantallaComponentHidden(evt);
+            }
+        });
         getContentPane().add(jLabelFondoPantalla, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1003, 678));
 
         pack();
@@ -266,6 +271,10 @@ Supplier selectedSupplier = null;
 
         }
     }//GEN-LAST:event_jListProveedoresValueChanged
+
+    private void jLabelFondoPantallaComponentHidden(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jLabelFondoPantallaComponentHidden
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabelFondoPantallaComponentHidden
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
